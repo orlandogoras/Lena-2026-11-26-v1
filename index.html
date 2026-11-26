@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Nueva Aventura Matemática de Lena</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           VARIABLES DE TEMA (PALETA ROSA Y PASTELES PARA LENA)
+           ========================================================================== */
+        :root {
+            --bg-color: #fff5f8;
+            --card-bg: #ffffff;
+            --text-color: #4a1533;
+            --text-muted: #854d6b;
+            --primary: #d81b60;
+            --primary-hover: #ad1457;
+            --secondary: #880e4f;
+            --accent: #f48fb1;
+            --pastel-mint: #e0f2f1;
+            --pastel-lavender: #f3e5f5;
+            --success: #0d9488;
+            --danger: #e11d48;
+            --warning: #d97706;
+            --border-color: #f8bbd0;
+            --shadow: 0 4px 16px rgba(216, 27, 96, 0.12);
+            --radius: 14px;
+            --font-main: 'Poppins', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1f0d17;
+            --card-bg: #2d1422;
+            --text-color: #fce4ec;
+            --text-muted: #d89cb8;
+            --primary: #f06292;
+            --primary-hover: #ec407a;
+            --secondary: #ad1457;
+            --accent: #f8bbd0;
+            --pastel-mint: #1b3636;
+            --pastel-lavender: #2e1d36;
+            --success: #2dd4bf;
+            --danger: #fb7185;
+            --warning: #fbbf24;
+            --border-color: #54243e;
+            --shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 48px;
+        }
+
+        sup, sub {
+            font-size: 0.74em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+        sup { top: -0.52em; }
+        sub { bottom: -0.26em; }
+
+        /* ==========================================================================
+           ENCABEZADO Y NAVEGACIÓN
+           ========================================================================== */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .controls {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 0.95rem;
+            border-radius: var(--radius);
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary,
+        .btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 3px 10px rgba(216, 27, 96, 0.28);
+        }
+
+        .btn-primary:hover,
+        .btn.active:hover {
+            background-color: var(--primary-hover);
+            color: #ffffff;
+            border-color: var(--primary-hover);
+        }
+
+        .btn-reset {
+            background-color: var(--pastel-lavender);
+            border-color: var(--border-color);
+        }
+
+        nav.tabs-nav {
+            display: flex;
+            justify-content: center;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 1rem 0;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.75rem 1.2rem;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            max-width: 1120px;
+            margin: 1.75rem auto;
+            padding: 0 1.25rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trim-header {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1.4rem 0 0.85rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        /* ==========================================================================
+           ACORDEÓN DE TEORÍA Y EJEMPLOS
+           ========================================================================== */
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 0.9rem;
+            overflow: hidden;
+            background-color: var(--card-bg);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 1.04rem;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(216, 27, 96, 0.06);
+        }
+
+        .accordion-body {
+            padding: 1rem 1.25rem 1.25rem;
+            display: none;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .accordion-item.active .accordion-body {
+            display: block;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 1rem;
+            margin-top: 1.1rem;
+        }
+
+        .example-box {
+            background-color: var(--bg-color);
+            border-left: 4px solid var(--primary);
+            padding: 0.95rem 1.05rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-size: 0.93rem;
+        }
+
+        .example-box p {
+            margin-top: 0.4rem;
+        }
+
+        .math-code {
+            font-family: var(--font-code);
+            background-color: rgba(216, 27, 96, 0.13);
+            padding: 0.14rem 0.45rem;
+            border-radius: 6px;
+            font-weight: 600;
+            color: var(--primary);
+            display: inline-block;
+        }
+
+        /* ==========================================================================
+           LABORATORIO SVG INTERACTIVO
+           ========================================================================== */
+        .lab-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.35rem;
+            margin-bottom: 1.25rem;
+            background-color: var(--bg-color);
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+
+        .svg-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-height: 390px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .svg-container svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* ==========================================================================
+           QUIZ, SUGERENCIAS OCULTAS, CAPTURA Y PIZARRA VECTORIAL
+           ========================================================================== */
+        .quiz-card {
+            position: relative;
+        }
+
+        .quiz-question {
+            font-size: 1.06rem;
+            font-weight: 600;
+            margin-bottom: 0.95rem;
+        }
+
+        .hint-bar {
+            margin-bottom: 0.95rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        .hint-btn {
+            background-color: var(--pastel-lavender);
+            color: var(--text-color);
+            border: 1px dashed var(--primary);
+            padding: 0.42rem 0.85rem;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 0.86rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .hint-btn:hover {
+            background-color: rgba(216, 27, 96, 0.14);
+        }
+
+        .capture-btn {
+            background-color: var(--pastel-mint);
+            color: var(--text-color);
+            border: 1px solid var(--success);
+            padding: 0.42rem 0.85rem;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 0.86rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .capture-btn:hover {
+            background-color: rgba(13, 148, 136, 0.16);
+            border-color: var(--success);
+        }
+
+        .capture-status {
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .hint-box {
+            display: none;
+            width: 100%;
+            margin-top: 0.35rem;
+            padding: 0.7rem 0.95rem;
+            border-radius: 8px;
+            background-color: var(--pastel-mint);
+            border-left: 4px solid var(--success);
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .hint-box.visible {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 0.95rem;
+        }
+
+        .option-btn {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.98rem;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background-color: rgba(216, 27, 96, 0.08);
+        }
+
+        .option-btn.selected {
+            background-color: rgba(216, 27, 96, 0.16);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .option-btn.selected.correct {
+            background-color: rgba(13, 148, 136, 0.18);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .option-btn.selected.incorrect {
+            background-color: rgba(225, 29, 72, 0.14);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .feedback {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin-top: 0.75rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: rgba(13, 148, 136, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: rgba(225, 29, 72, 0.14);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .score-pill {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 0.45rem 0.95rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--primary);
+        }
+
+        /* Pizarra de trabajo del estudiante */
+        .sketchpad-container {
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        .sketchpad-toolbar {
+            background-color: var(--bg-color);
+            padding: 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tool-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.32rem 0.62rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-color);
+            font-family: var(--font-main);
+            font-weight: 600;
+        }
+
+        .tool-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .canvas-resize-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            min-height: 150px;
+            max-height: 680px;
+            background-color: #ffffff;
+        }
+
+        canvas.sketchpad {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .canvas-text-input {
+            position: absolute;
+            border: 1px dashed var(--primary);
+            background: rgba(255, 255, 255, 0.95);
+            color: #4a1533;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            padding: 2px 6px;
+            outline: none;
+            border-radius: 4px;
+            z-index: 20;
+            min-width: 90px;
+        }
+
+        .canvas-resize-handle {
+            width: 100%;
+            height: 18px;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            cursor: ns-resize;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            user-select: none;
+            touch-action: none;
+        }
+
+        /* ==========================================================================
+           BANNER Y TARJETAS DE INICIO
+           ========================================================================== */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #ffffff;
+            padding: 2.2rem 1.8rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.75rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-banner h2 {
+            font-size: 1.85rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background-color: var(--accent);
+            color: #4a1533;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-tag {
+            font-size: 0.78rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-weight: 600;
+            background-color: rgba(216, 27, 96, 0.14);
+            color: var(--primary);
+        }
+
+        .quick-card {
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        .quick-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 0.85rem 1rem; }
+            h1 { font-size: 1.12rem; }
+            main { padding: 0 0.9rem; }
+            .hero-banner { padding: 1.4rem 1.1rem; }
+            .hero-banner h2 { font-size: 1.45rem; }
+            .svg-container { aspect-ratio: 4 / 3; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado y controles globales -->
+    <header>
+        <div class="logo-container">
+            <span class="logo-icon" aria-hidden="true">🌸✨</span>
+            <h1 data-i18n="app_title">La Nueva Aventura Matemática de Lena</h1>
+        </div>
+        <div class="controls">
+            <button class="btn" id="langToggleBtn" onclick="toggleLanguage()" aria-label="Cambiar idioma">🌐 ES</button>
+            <button class="btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Cambiar tema claro u oscuro">🌙</button>
+            <button class="btn btn-reset" id="resetAppBtn" onclick="resetApplication()" aria-label="Reiniciar aplicación">🔄 <span data-i18n="btn_reset">Reiniciar</span></button>
+        </div>
+    </header>
+
+    <!-- Navegación por pestañas -->
+    <nav class="tabs-nav" role="tablist" aria-label="Secciones de aprendizaje">
+        <button class="tab-btn active" role="tab" aria-selected="true" id="nav-inicio" onclick="switchTab('inicio', this)">🏠 <span data-i18n="tab_home">Inicio</span></button>
+        <button class="tab-btn" role="tab" aria-selected="false" id="nav-teoria" onclick="switchTab('teoria', this)">📚 <span data-i18n="tab_theory">Teoría y Ejemplos</span></button>
+        <button class="tab-btn" role="tab" aria-selected="false" id="nav-laboratorio" onclick="switchTab('laboratorio', this)">🧪 <span data-i18n="tab_lab">Laboratorio SVG</span></button>
+        <button class="tab-btn" role="tab" aria-selected="false" id="nav-quiz" onclick="switchTab('quiz', this)">📝 <span data-i18n="tab_quiz">Retos y Quiz</span></button>
+    </nav>
+
+    <main>
+        <!-- PESTAÑA 1: INICIO -->
+        <section id="tab-inicio" class="tab-content active" role="tabpanel">
+            <div class="hero-banner">
+                <span class="badge" data-i18n="grade_badge">Preparación Grado 4° • Números Naturales</span>
+                <h2 data-i18n="welcome_title">¡Bienvenida, Lena, a tu Nueva Aventura Matemática!</h2>
+                <p data-i18n="welcome_subtitle">Explora, visualiza y resuelve desafíos cotidianos sobre división, tablas de multiplicar, potenciación, multiplicación abreviada, sustracción con ceros y las cuatro operaciones básicas.</p>
+            </div>
+
+            <div class="trim-header" data-i18n="sec1_title">🌷 Misión 1: Multiplicación, División y Potencias</div>
+            <div class="grid-3">
+                <div class="card quick-card" onclick="openTopicFromHome(0)" tabindex="0" role="button">
+                    <h3>➗ <span data-i18n="card_0_title">1. División Exacta e Inexacta</span></h3>
+                    <p data-i18n="card_0_desc">Repartos equitativos y residuos con dividendo menor o igual a 10d − 1.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(1)" tabindex="0" role="button">
+                    <h3>✖️ <span data-i18n="card_1_title">2. Tablas de Multiplicar</span></h3>
+                    <p data-i18n="card_1_desc">Agilidad mental, arreglos rectangulares y propiedades conmutativa y asociativa.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(2)" tabindex="0" role="button">
+                    <h3>🚀 <span data-i18n="card_2_title">3. Introducción a la Potenciación</span></h3>
+                    <p data-i18n="card_2_desc">Base, exponente y potencia como multiplicación abreviada de factores iguales.</p>
+                </div>
+            </div>
+
+            <div class="trim-header" data-i18n="sec2_title">🎀 Misión 2: Estrategias Rápidas y Operaciones Básicas</div>
+            <div class="grid-3">
+                <div class="card quick-card" onclick="openTopicFromHome(3)" tabindex="0" role="button">
+                    <h3>⚡ <span data-i18n="card_3_title">4. Multiplicación Abreviada</span></h3>
+                    <p data-i18n="card_3_desc">Trucos rápidos por 10, 100, 1 000, múltiplos de 10 y por 11 o 9.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(4)" tabindex="0" role="button">
+                    <h3>0️⃣ <span data-i18n="card_4_title">5. Sustracción con Varios Ceros</span></h3>
+                    <p data-i18n="card_4_desc">Desagrupación segura en minuendos como 4 000, 10 000 o 50 000.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(5)" tabindex="0" role="button">
+                    <h3>🧩 <span data-i18n="card_5_title">6. Las Cuatro Operaciones Básicas</span></h3>
+                    <p data-i18n="card_5_desc">Integración de adición, sustracción, multiplicación y división en problemas reales.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 data-i18n="goals_title">🎯 Metas de Aprendizaje para Lena</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.6rem;" id="goals-list"></ul>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 2: TEORÍA Y EJEMPLOS -->
+        <section id="tab-teoria" class="tab-content" role="tabpanel">
+            <div class="card">
+                <h2 data-i18n="theory_header">Guía Conceptual — 4 Ejemplos Explicados por Tema</h2>
+                <p data-i18n="theory_sub">Haz clic en cada tema para abrir la explicación clara y revisar 4 ejemplos resueltos paso a paso.</p>
+            </div>
+            <div id="accordion-container"></div>
+        </section>
+
+        <!-- PESTAÑA 3: LABORATORIO SVG -->
+        <section id="tab-laboratorio" class="tab-content" role="tabpanel">
+            <div class="card">
+                <h2 data-i18n="lab_header">Laboratorio Visual Interactivo SVG</h2>
+                <p data-i18n="lab_sub">Manipula los controles para descubrir cómo funcionan los repartos con residuo, las potencias y la multiplicación abreviada.</p>
+
+                <div id="lab-mode-buttons" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn active" id="lab-btn-division_groups" onclick="setLabMode('division_groups', this)" data-i18n="lab_mode_div">➗ División con Residuo</button>
+                    <button class="btn" id="lab-btn-power_growth" onclick="setLabMode('power_growth', this)" data-i18n="lab_mode_pow">🚀 Potenciación Visual</button>
+                    <button class="btn" id="lab-btn-short_mult" onclick="setLabMode('short_mult', this)" data-i18n="lab_mode_mult">⚡ Multiplicación Abreviada</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="lab-controls" id="lab-controls"></div>
+                <div class="svg-container">
+                    <svg id="svg-lab-viewport" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Laboratorio matemático interactivo"></svg>
+                </div>
+                <div id="lab-metrics" style="margin-top: 1rem; font-weight: 600; text-align: center; font-size: 1.05rem;"></div>
+            </div>
+        </section>
+
+        <!-- PESTAÑA 4: QUIZ Y PROBLEMAS DE APLICACIÓN -->
+        <section id="tab-quiz" class="tab-content" role="tabpanel">
+            <div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 data-i18n="quiz_header">Problemas de Aplicación y Quiz Interactivo</h2>
+                    <p data-i18n="quiz_sub">Resuelve situaciones cotidianas usando tu pizarra. Si necesitas una pista, pulsa el botón de sugerencia en cada problema.</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="score-pill" id="quiz-score-pill">⭐ 0 / 12</span>
+                    <button class="btn btn-primary" onclick="generateQuiz()"><span data-i18n="btn_regenerate">🎲 Nuevos Problemas</span></button>
+                </div>
+            </div>
+
+            <div id="quiz-container"></div>
+        </section>
+    </main>
+
+    <script>
+        /* ==========================================================================
+           1. ESTADO GLOBAL, PERSISTENCIA EN LOCALSTORAGE E INTERNACIONALIZACIÓN
+           ========================================================================== */
+        const STORAGE_KEYS = {
+            lang: 'lena_math_4_lang',
+            theme: 'lena_math_4_theme',
+            tab: 'lena_math_4_tab',
+            labMode: 'lena_math_4_lab_mode',
+            labState: 'lena_math_4_lab_state'
+        };
+
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let currentLang = localStorage.getItem(STORAGE_KEYS.lang) || 'ES';
+        let currentTheme = localStorage.getItem(STORAGE_KEYS.theme) || (prefersDark ? 'dark' : 'light');
+        let currentTab = localStorage.getItem(STORAGE_KEYS.tab) || 'inicio';
+        let currentLabMode = localStorage.getItem(STORAGE_KEYS.labMode) || 'division_groups';
+
+        const defaultLabState = {
+            dividend: 29,
+            divisor: 4,
+            powBase: 3,
+            powExp: 3,
+            multFactor: 14,
+            multZeros: 2
+        };
+
+        let labState = Object.assign({}, defaultLabState, JSON.parse(localStorage.getItem(STORAGE_KEYS.labState) || '{}'));
+
+        const i18n = {
+            ES: {
+                app_title: "La Nueva Aventura Matemática de Lena",
+                btn_reset: "Reiniciar",
+                tab_home: "Inicio",
+                tab_theory: "Teoría y Ejemplos",
+                tab_lab: "Laboratorio SVG",
+                tab_quiz: "Retos y Quiz",
+                grade_badge: "Preparación Grado 4° • Números Naturales",
+                welcome_title: "¡Bienvenida, Lena, a tu Nueva Aventura Matemática!",
+                welcome_subtitle: "Explora, visualiza y resuelve desafíos cotidianos sobre división, tablas de multiplicar, potenciación, multiplicación abreviada, sustracción con ceros y las cuatro operaciones básicas.",
+                sec1_title: "🌷 Misión 1: Multiplicación, División y Potencias",
+                sec2_title: "🎀 Misión 2: Estrategias Rápidas y Operaciones Básicas",
+                card_0_title: "1. División Exacta e Inexacta",
+                card_0_desc: "Repartos equitativos y residuos con dividendo menor o igual a 10d − 1.",
+                card_1_title: "2. Tablas de Multiplicar",
+                card_1_desc: "Agilidad mental, arreglos rectangulares y propiedades conmutativa y asociativa.",
+                card_2_title: "3. Introducción a la Potenciación",
+                card_2_desc: "Base, exponente y potencia como multiplicación abreviada de factores iguales.",
+                card_3_title: "4. Multiplicación Abreviada",
+                card_3_desc: "Trucos rápidos por 10, 100, 1 000, múltiplos de 10 y por 11 o 9.",
+                card_4_title: "5. Sustracción con Varios Ceros",
+                card_4_desc: "Desagrupación segura en minuendos como 4 000, 10 000 o 50 000.",
+                card_5_title: "6. Las Cuatro Operaciones Básicas",
+                card_5_desc: "Integración de adición, sustracción, multiplicación y división en problemas reales.",
+                goals_title: "🎯 Metas de Aprendizaje para Lena",
+                theory_header: "Guía Conceptual — 4 Ejemplos Explicados por Tema",
+                theory_sub: "Haz clic en cada tema para abrir la explicación clara y revisar 4 ejemplos resueltos paso a paso.",
+                lab_header: "Laboratorio Visual Interactivo SVG",
+                lab_sub: "Manipula los controles para descubrir cómo funcionan los repartos con residuo, las potencias y la multiplicación abreviada.",
+                lab_mode_div: "➗ División con Residuo",
+                lab_mode_pow: "🚀 Potenciación Visual",
+                lab_mode_mult: "⚡ Multiplicación Abreviada",
+                quiz_header: "Problemas de Aplicación y Quiz Interactivo",
+                quiz_sub: "Resuelve situaciones cotidianas usando tu pizarra. Si necesitas una pista, pulsa el botón de sugerencia en cada problema.",
+                btn_regenerate: "🎲 Nuevos Problemas",
+                hint_show: "💡 Ver sugerencia de solución",
+                hint_hide: "🙈 Ocultar sugerencia",
+                capture_btn: "📷 Capturar reto y lienzo",
+                capture_copied: "✅ Captura copiada y descargada",
+                capture_saved: "📥 Captura descargada en PNG",
+                capture_none: "Sin responder aún",
+                capture_answer_label: "Respuesta seleccionada",
+                capture_feedback_label: "Retroalimentación",
+                capture_no_feedback: "Aún no hay retroalimentación registrada.",
+                correct_msg: "¡Excelente, Lena! Respuesta correcta. 🌟",
+                incorrect_msg: "Aún no es esa opción. Revisa tus cálculos o usa la sugerencia e inténtalo de nuevo.",
+                sketch_pencil: "✏️ Lápiz",
+                sketch_line: "📏 Línea",
+                sketch_rect: "⬛ Rect",
+                sketch_text: "T Texto",
+                sketch_eraser: "🧹 Borrador",
+                sketch_clear: "🗑️ Limpiar",
+                resize_label: "↕ Arrastra para cambiar altura de la pizarra",
+                reset_confirm: "¿Deseas reiniciar tu progreso, las pizarras y restaurar la aplicación?"
+            },
+            EN: {
+                app_title: "Lena's New Math Adventure",
+                btn_reset: "Reset",
+                tab_home: "Home",
+                tab_theory: "Theory & Examples",
+                tab_lab: "SVG Laboratory",
+                tab_quiz: "Challenges & Quiz",
+                grade_badge: "Grade 4 Readiness • Natural Numbers",
+                welcome_title: "Welcome, Lena, to Your New Math Adventure!",
+                welcome_subtitle: "Explore, visualize, and solve everyday challenges on division, multiplication tables, powers, shortcut multiplication, subtraction across zeros, and the four basic operations.",
+                sec1_title: "🌷 Mission 1: Multiplication, Division & Powers",
+                sec2_title: "🎀 Mission 2: Fast Strategies & Basic Operations",
+                card_0_title: "1. Exact & Inexact Division",
+                card_0_desc: "Equal sharing and remainders with dividend no greater than 10d − 1.",
+                card_1_title: "2. Multiplication Tables",
+                card_1_desc: "Mental fluency, rectangular arrays, and commutative/associative properties.",
+                card_2_title: "3. Introduction to Powers",
+                card_2_desc: "Base, exponent, and power as repeated multiplication of equal factors.",
+                card_3_title: "4. Shortcut Multiplication",
+                card_3_desc: "Fast tricks multiplying by 10, 100, 1 000, multiples of 10, 11, or 9.",
+                card_4_title: "5. Subtraction Across Zeros",
+                card_4_desc: "Confident regrouping in minuends like 4 000, 10 000, or 50 000.",
+                card_5_title: "6. The Four Basic Operations",
+                card_5_desc: "Combining addition, subtraction, multiplication, and division in real-life problems.",
+                goals_title: "🎯 Learning Goals for Lena",
+                theory_header: "Conceptual Guide — 4 Explained Examples per Topic",
+                theory_sub: "Click each topic to open a clear explanation and review 4 step-by-step solved examples.",
+                lab_header: "Interactive SVG Visual Laboratory",
+                lab_sub: "Adjust the sliders to see how division with remainders, powers, and shortcut multiplication work.",
+                lab_mode_div: "➗ Division with Remainder",
+                lab_mode_pow: "🚀 Visual Powers",
+                lab_mode_mult: "⚡ Shortcut Multiplication",
+                quiz_header: "Application Problems & Interactive Quiz",
+                quiz_sub: "Solve real-world stories using your sketchpad. If you need a clue, tap the hint button on each problem.",
+                btn_regenerate: "🎲 New Problems",
+                hint_show: "💡 Show solution hint",
+                hint_hide: "🙈 Hide hint",
+                capture_btn: "📷 Capture prompt & canvas",
+                capture_copied: "✅ Copied & downloaded PNG",
+                capture_saved: "📥 Downloaded PNG capture",
+                capture_none: "Not answered yet",
+                capture_answer_label: "Selected answer",
+                capture_feedback_label: "Feedback",
+                capture_no_feedback: "No feedback recorded yet.",
+                correct_msg: "Awesome job, Lena! Correct answer. 🌟",
+                incorrect_msg: "Not quite that one. Check your steps or open the hint and try again.",
+                sketch_pencil: "✏️ Pencil",
+                sketch_line: "📏 Line",
+                sketch_rect: "⬛ Rect",
+                sketch_text: "T Text",
+                sketch_eraser: "🧹 Eraser",
+                sketch_clear: "🗑️ Clear",
+                resize_label: "↕ Drag to resize sketchpad height",
+                reset_confirm: "Do you want to reset your score, sketchpads, and restore the app?"
+            }
+        };
+
+        const goalsData = {
+            ES: [
+                "Comprender la división exacta e inexacta (con dividendo D ≤ 10d − 1) y verificar siempre que D = d × c + r, con r < d.",
+                "Dominar las tablas de multiplicar usando grupos iguales, arreglos y relaciones inversas con la división.",
+                "Reconocer la potenciación como multiplicación abreviada de factores iguales identificando base, exponente y potencia.",
+                "Aplicar multiplicación abreviada por 10, 100, 1 000, decenas completas y estrategias mentales.",
+                "Resolver sustracciones con varios ceros en el minuendo mediante desagrupación ordenada sin errores.",
+                "Seleccionar y combinar las cuatro operaciones básicas en problemas de compras, ahorro, colecciones y tiempo."
+            ],
+            EN: [
+                "Understand exact and inexact division (with dividend D ≤ 10d − 1) and verify that D = d × q + r, with r < d.",
+                "Master multiplication tables using equal groups, arrays, and inverse links to division.",
+                "Recognize powers as repeated multiplication of equal factors by identifying base, exponent, and value.",
+                "Apply shortcut multiplication by 10, 100, 1 000, multiples of 10, and mental strategies.",
+                "Solve subtraction problems with multiple zeros in the minuend using careful regrouping.",
+                "Choose and combine the four basic operations in shopping, savings, collections, and time stories."
+            ]
+        };
+
+        /* ==========================================================================
+           2. CONTENIDO TEÓRICO Y 4 EJEMPLOS POR TEMA
+           ========================================================================== */
+        const theoryData = [
+            {
+                id: 0,
+                module: 1,
+                title: {
+                    ES: "1. División Exacta e Inexacta ",
+                    EN: "1. Exact & Inexact Division "
+                },
+                content: {
+                    ES: `<strong>Dividir</strong> es repartir una cantidad total llamada <strong>dividendo (D)</strong> en partes iguales según el <strong>divisor (d)</strong>. El resultado de cada grupo es el <strong>cociente (c)</strong> y lo que sobra sin alcanzar para otro grupo completo es el <strong>residuo (r)</strong>.<br>
+                    • Cuando <span class="math-code">r = 0</span>, la división es <strong>exacta</strong>.<br>
+                    • Cuando <span class="math-code">0 &lt; r &lt; d</span>, la división es <strong>inexacta</strong>.<br>
+                     `,
+                    EN: `<strong>Division</strong> splits a total amount called the <strong>dividend (D)</strong> into equal groups determined by the <strong>divisor (d)</strong>. Each group gets the <strong>quotient (q)</strong>, and what is left over without forming a full group is the <strong>remainder (r)</strong>.<br>
+                    • When <span class="math-code">r = 0</span>, the division is <strong>exact</strong>.<br>
+                    • When <span class="math-code">0 &lt; r &lt; d</span>, the division is <strong>inexact</strong>.<br>
+                    `
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (División exacta con d = 6):</strong> Repartir <span class="math-code">48</span> stickers en <span class="math-code">6</span> sobres iguales (<span class="math-code">48 ≤ 59</span>).<br>
+                        <p><strong>Paso a paso:</strong> Buscamos en la tabla del 6: <span class="math-code">6 × 8 = 48</span>. Cociente <span class="math-code">c = 8</span> y residuo <span class="math-code">r = 0</span>. Es exacta.</p>`,
+                        EN: `<strong>Example 1 (Exact division with d = 6):</strong> Share <span class="math-code">48</span> stickers into <span class="math-code">6</span> equal envelopes (<span class="math-code">48 ≤ 59</span>).<br>
+                        <p><strong>Step by step:</strong> From the 6-times table: <span class="math-code">6 × 8 = 48</span>. Quotient <span class="math-code">q = 8</span> and remainder <span class="math-code">r = 0</span>. Exact division.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (División inexacta con d = 7):</strong> Guardar <span class="math-code">53</span> lápices de colores en cajas de <span class="math-code">7</span> unidades (<span class="math-code">53 ≤ 69</span>).<br>
+                        <p><strong>Paso a paso:</strong> El múltiplo de 7 más cercano sin pasarse de 53 es <span class="math-code">7 × 7 = 49</span>. Sobran <span class="math-code">53 − 49 = 4</span> lápices. Se llenan <span class="math-code">7</span> cajas y quedan <span class="math-code">4</span> sueltos.</p>`,
+                        EN: `<strong>Example 2 (Inexact division with d = 7):</strong> Pack <span class="math-code">53</span> colored pencils into boxes of <span class="math-code">7</span> (<span class="math-code">53 ≤ 69</span>).<br>
+                        <p><strong>Step by step:</strong> Closest multiple of 7 without exceeding 53 is <span class="math-code">7 × 7 = 49</span>. Remainder is <span class="math-code">53 − 49 = 4</span>. So <span class="math-code">7</span> full boxes and <span class="math-code">4</span> left over.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Límite máximo 10d − 1 con d = 8):</strong> Calcular <span class="math-code">79 ÷ 8</span> (observa que <span class="math-code">10 × 8 − 1 = 79</span>).<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">8 × 9 = 72</span> y <span class="math-code">79 − 72 = 7</span>. Cociente <span class="math-code">c = 9</span> y residuo máximo <span class="math-code">r = 7</span> (<span class="math-code">7 &lt; 8</span>).</p>`,
+                        EN: `<strong>Example 3 (Upper bound 10d − 1 with d = 8):</strong> Compute <span class="math-code">79 ÷ 8</span> (notice <span class="math-code">10 × 8 − 1 = 79</span>).<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">8 × 9 = 72</span> and <span class="math-code">79 − 72 = 7</span>. Quotient <span class="math-code">q = 9</span> and maximum remainder <span class="math-code">r = 7</span> (<span class="math-code">7 &lt; 8</span>).</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 4 (Prueba de la división con d = 9):</strong> Comprobar <span class="math-code">68 ÷ 9</span> (<span class="math-code">68 ≤ 89</span>).<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">9 × 7 = 63</span>, residuo <span class="math-code">68 − 63 = 5</span>. Verificamos: <span class="math-code">9 × 7 + 5 = 63 + 5 = 68</span>.</p>`,
+                        EN: `<strong>Example 4 (Checking division with d = 9):</strong> Verify <span class="math-code">68 ÷ 9</span> (<span class="math-code">68 ≤ 89</span>).<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">9 × 7 = 63</span>, remainder <span class="math-code">68 − 63 = 5</span>. Check: <span class="math-code">9 × 7 + 5 = 63 + 5 = 68</span>.</p>`
+                    }
+                ]
+            },
+            {
+                id: 1,
+                module: 1,
+                title: {
+                    ES: "2. Tablas de Multiplicar y Propiedades",
+                    EN: "2. Multiplication Tables & Properties"
+                },
+                content: {
+                    ES: `La <strong>multiplicación</strong> es una suma abreviada de sumandos iguales. Dominar las tablas permite resolver cálculos mentales con seguridad:<br>
+                    • <strong>Propiedad conmutativa:</strong> Cambiar el orden de los factores no altera el producto (<span class="math-code">7 × 8 = 8 × 7 = 56</span>).<br>
+                    • <strong>Estrategia de dobles y descomposición:</strong> Para calcular <span class="math-code">8 × 6</span>, puedes pensar en <span class="math-code">(8 × 5) + 8 = 40 + 8 = 48</span>.`,
+                    EN: `<strong>Multiplication</strong> is a fast way to add equal groups. Mastering multiplication tables builds mental math confidence:<br>
+                    • <strong>Commutative property:</strong> Changing the order of factors does not change the product (<span class="math-code">7 × 8 = 8 × 7 = 56</span>).<br>
+                    • <strong>Doubles & decomposition strategy:</strong> To find <span class="math-code">8 × 6</span>, think <span class="math-code">(8 × 5) + 8 = 40 + 8 = 48</span>.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Tabla del 7):</strong> Lena lee <span class="math-code">7</span> páginas cada día durante <span class="math-code">8</span> días.<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">7 × 8 = 56</span> páginas leídas en total.</p>`,
+                        EN: `<strong>Example 1 (7-times table):</strong> Lena reads <span class="math-code">7</span> pages every day for <span class="math-code">8</span> days.<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">7 × 8 = 56</span> pages read in total.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Tabla del 9 por descomposición):</strong> Calcular <span class="math-code">9 × 6</span>.<br>
+                        <p><strong>Paso a paso:</strong> Multiplicamos por 10 y restamos una vez 6: <span class="math-code">(10 × 6) − 6 = 60 − 6 = 54</span>.</p>`,
+                        EN: `<strong>Example 2 (9-times table via decomposition):</strong> Compute <span class="math-code">9 × 6</span>.<br>
+                        <p><strong>Step by step:</strong> Multiply by 10 and subtract 6 once: <span class="math-code">(10 × 6) − 6 = 60 − 6 = 54</span>.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Arreglo rectangular):</strong> Una bandeja de cupcakes tiene <span class="math-code">6</span> filas y <span class="math-code">8</span> columnas.<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">6 × 8 = 48</span> cupcakes en la bandeja.</p>`,
+                        EN: `<strong>Example 3 (Rectangular array):</strong> A cupcake tray has <span class="math-code">6</span> rows and <span class="math-code">8</span> columns.<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">6 × 8 = 48</span> cupcakes on the tray.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 4 (Factor desconocido):</strong> ¿Qué número multiplicado por <span class="math-code">8</span> da <span class="math-code">72</span>?<br>
+                        <p><strong>Paso a paso:</strong> Recordamos <span class="math-code">8 × 9 = 72</span>, así que el factor buscado es <span class="math-code">9</span>.</p>`,
+                        EN: `<strong>Example 4 (Missing factor):</strong> Which number multiplied by <span class="math-code">8</span> equals <span class="math-code">72</span>?<br>
+                        <p><strong>Step by step:</strong> Recall <span class="math-code">8 × 9 = 72</span>, so the missing factor is <span class="math-code">9</span>.</p>`
+                    }
+                ]
+            },
+            {
+                id: 2,
+                module: 1,
+                title: {
+                    ES: "3. Introducción a la Potenciación con Números Naturales",
+                    EN: "3. Introduction to Powers with Natural Numbers"
+                },
+                content: {
+                    ES: `La <strong>potenciación</strong> es una forma abreviada de escribir una multiplicación de <strong>factores iguales</strong>:<br>
+                    • <strong>Base:</strong> Es el factor que se repite.<br>
+                    • <strong>Exponente:</strong> Indica cuántas veces se multiplica la base por sí misma.<br>
+                    • <strong>Potencia:</strong> Es el resultado final. Por ejemplo, <span class="math-code">2<sup>4</sup> = 2 × 2 × 2 × 2 = 16</span> (se lee "dos a la cuarta"). Cuando el exponente es 2 se lee "al cuadrado", y cuando es 3 se lee "al cubo".`,
+                    EN: `<strong>Exponentiation (powers)</strong> is a shorthand way to write repeated multiplication of <strong>equal factors</strong>:<br>
+                    • <strong>Base:</strong> The factor being repeated.<br>
+                    • <strong>Exponent:</strong> Tells how many times the base is multiplied by itself.<br>
+                    • <strong>Power:</strong> The final result. For example, <span class="math-code">2<sup>4</sup> = 2 × 2 × 2 × 2 = 16</span> ("two to the fourth"). Exponent 2 is read "squared", and exponent 3 is read "cubed".`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Al cuadrado):</strong> Calcular <span class="math-code">5<sup>2</sup></span>.<br>
+                        <p><strong>Paso a paso:</strong> La base es 5 y el exponente es 2: <span class="math-code">5 × 5 = 25</span>. ¡Cuidado! No es 5 × 2.</p>`,
+                        EN: `<strong>Example 1 (Squared):</strong> Compute <span class="math-code">5<sup>2</sup></span>.<br>
+                        <p><strong>Step by step:</strong> Base is 5 and exponent is 2: <span class="math-code">5 × 5 = 25</span>. Careful: not 5 × 2!</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Al cubo):</strong> Calcular <span class="math-code">3<sup>3</sup></span>.<br>
+                        <p><strong>Paso a paso:</strong> Multiplicamos el 3 tres veces: <span class="math-code">3 × 3 × 3 = 9 × 3 = 27</span>.</p>`,
+                        EN: `<strong>Example 2 (Cubed):</strong> Compute <span class="math-code">3<sup>3</sup></span>.<br>
+                        <p><strong>Step by step:</strong> Multiply 3 three times: <span class="math-code">3 × 3 × 3 = 9 × 3 = 27</span>.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Potencias de 10):</strong> Calcular <span class="math-code">10<sup>4</sup></span>.<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">10 × 10 × 10 × 10 = 10 000</span> (un 1 seguido de cuatro ceros).</p>`,
+                        EN: `<strong>Example 3 (Powers of 10):</strong> Compute <span class="math-code">10<sup>4</sup></span>.<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">10 × 10 × 10 × 10 = 10 000</span> (a 1 followed by four zeros).</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 4 (Cajas dentro de cajas):</strong> Hay <span class="math-code">4</span> cajas grandes, cada una tiene <span class="math-code">4</span> estuches y cada estuche tiene <span class="math-code">4</span> marcadores.<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">4<sup>3</sup> = 4 × 4 × 4 = 16 × 4 = 64</span> marcadores.</p>`,
+                        EN: `<strong>Example 4 (Boxes inside boxes):</strong> There are <span class="math-code">4</span> big boxes, each has <span class="math-code">4</span> cases, and each case holds <span class="math-code">4</span> markers.<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">4<sup>3</sup> = 4 × 4 × 4 = 16 × 4 = 64</span> markers.</p>`
+                    }
+                ]
+            },
+            {
+                id: 3,
+                module: 2,
+                title: {
+                    ES: "4. Multiplicación Abreviada",
+                    EN: "4. Shortcut Multiplication"
+                },
+                content: {
+                    ES: `La <strong>multiplicación abreviada</strong> permite hallar productos sin hacer todo el algoritmo largo:<br>
+                    • <strong>Por 10, 100 o 1 000:</strong> Se escribe el mismo número y se agregan a la derecha 1, 2 o 3 ceros respectivamente.<br>
+                    • <strong>Por decenas o centenas exactas (ej. × 30, × 400):</strong> Se multiplican las cifras distintas de cero y se añaden al final todos los ceros de ambos factores.<br>
+                    • <strong>Por 9 o por 11:</strong> Multiplicar por 9 equivale a <span class="math-code">(n × 10) − n</span>; multiplicar por 11 equivale a <span class="math-code">(n × 10) + n</span>.`,
+                    EN: `<strong>Shortcut multiplication</strong> finds products quickly without full long multiplication:<br>
+                    • <strong>By 10, 100, or 1 000:</strong> Keep the number and append 1, 2, or 3 zeros to the right.<br>
+                    • <strong>By exact tens or hundreds (e.g., × 30, × 400):</strong> Multiply non-zero parts first, then append all trailing zeros from both factors.<br>
+                    • <strong>By 9 or 11:</strong> Multiplying by 9 equals <span class="math-code">(n × 10) − n</span>; multiplying by 11 equals <span class="math-code">(n × 10) + n</span>.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Por 100):</strong> Calcular <span class="math-code">47 × 100</span>.<br>
+                        <p><strong>Paso a paso:</strong> Escribimos 47 y agregamos dos ceros a la derecha: <span class="math-code">4 700</span>.</p>`,
+                        EN: `<strong>Example 1 (By 100):</strong> Compute <span class="math-code">47 × 100</span>.<br>
+                        <p><strong>Step by step:</strong> Write 47 and append two zeros on the right: <span class="math-code">4 700</span>.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Múltiplos de 10):</strong> Calcular <span class="math-code">30 × 500</span>.<br>
+                        <p><strong>Paso a paso:</strong> Multiplicamos <span class="math-code">3 × 5 = 15</span> y agregamos los 3 ceros totales (<span class="math-code">1 + 2</span>): <span class="math-code">15 000</span>.</p>`,
+                        EN: `<strong>Example 2 (Multiples of 10):</strong> Compute <span class="math-code">30 × 500</span>.<br>
+                        <p><strong>Step by step:</strong> Multiply <span class="math-code">3 × 5 = 15</span> and append all 3 trailing zeros (<span class="math-code">1 + 2</span>): <span class="math-code">15 000</span>.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Abreviada por 11):</strong> Calcular <span class="math-code">24 × 11</span>.<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">(24 × 10) + 24 = 240 + 24 = 264</span>.</p>`,
+                        EN: `<strong>Example 3 (Shortcut by 11):</strong> Compute <span class="math-code">24 × 11</span>.<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">(24 × 10) + 24 = 240 + 24 = 264</span>.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 4 (Abreviada por 9):</strong> Calcular <span class="math-code">35 × 9</span>.<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">(35 × 10) − 35 = 350 − 35 = 315</span>.</p>`,
+                        EN: `<strong>Example 4 (Shortcut by 9):</strong> Compute <span class="math-code">35 × 9</span>.<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">(35 × 10) − 35 = 350 − 35 = 315</span>.</p>`
+                    }
+                ]
+            },
+            {
+                id: 4,
+                module: 2,
+                title: {
+                    ES: "5. Sustracción con Varios Ceros en el Minuendo",
+                    EN: "5. Subtraction with Multiple Zeros in the Minuend"
+                },
+                content: {
+                    ES: `Cuando el <strong>minuendo</strong> termina en varios ceros (como <span class="math-code">3 000</span> o <span class="math-code">10 000</span>), necesitamos <strong>desagrupar</strong> de izquierda a derecha:<br>
+                    • La primera cifra distinta de cero presta 1 unidad al cero vecino, convirtiéndolo en 10; luego ese 10 presta 1 al siguiente y queda en <strong>9</strong>, hasta llegar a las unidades que quedan en <strong>10</strong>.<br>
+                    • <strong>Truco de comprobación:</strong> Siempre verifica sumando <span class="math-code">Diferencia + Sustraendo = Minuendo</span>.`,
+                    EN: `When the <strong>minuend</strong> ends in multiple zeros (such as <span class="math-code">3 000</span> or <span class="math-code">10 000</span>), we <strong>regroup</strong> from left to right:<br>
+                    • The first non-zero digit lends 1 to its neighbor zero (making it 10); each middle zero lends 1 to the next and becomes <strong>9</strong>, while the ones place stays at <strong>10</strong>.<br>
+                    • <strong>Check trick:</strong> Always verify by adding <span class="math-code">Difference + Subtrahend = Minuend</span>.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Tres ceros en el minuendo):</strong> Calcular <span class="math-code">4 000 − 1 368</span>.<br>
+                        <p><strong>Paso a paso:</strong> 4 000 se desagrupa en <span class="math-code">3</span> mil, <span class="math-code">9</span> centenas, <span class="math-code">9</span> decenas y <span class="math-code">10</span> unidades. Restamos columna por columna: <span class="math-code">10−8=2</span>, <span class="math-code">9−6=3</span>, <span class="math-code">9−3=6</span>, <span class="math-code">3−1=2</span> → <span class="math-code">2 632</span>.</p>`,
+                        EN: `<strong>Example 1 (Three zeros in the minuend):</strong> Compute <span class="math-code">4 000 − 1 368</span>.<br>
+                        <p><strong>Step by step:</strong> 4 000 regroups into <span class="math-code">3</span> thousands, <span class="math-code">9</span> hundreds, <span class="math-code">9</span> tens, and <span class="math-code">10</span> ones. Subtract each column: <span class="math-code">2 632</span>.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Vueltas en una compra con 10 000):</strong> Lena paga un libro de <span class="math-code">6 450</span> pesos con un billete de <span class="math-code">10 000</span>.<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">10 000 − 6 450</span>: <span class="math-code">0−0=0</span>, <span class="math-code">10−5=5</span>, <span class="math-code">9−4=5</span>, <span class="math-code">9−6=3</span> → <span class="math-code">3 550</span> pesos de cambio.</p>`,
+                        EN: `<strong>Example 2 (Change from 10 000):</strong> Lena pays for a book costing <span class="math-code">6 450</span> pesos with a <span class="math-code">10 000</span> bill.<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">10 000 − 6 450 = 3 550</span> pesos in change.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Cuatro ceros):</strong> Calcular <span class="math-code">20 000 − 7 824</span>.<br>
+                        <p><strong>Paso a paso:</strong> Desagrupamos 20 000 como <span class="math-code">1</span> decena de mil, <span class="math-code">9</span> mil, <span class="math-code">9</span> centenas, <span class="math-code">9</span> decenas y <span class="math-code">10</span> unidades → <span class="math-code">12 176</span>.</p>`,
+                        EN: `<strong>Example 3 (Four zeros):</strong> Compute <span class="math-code">20 000 − 7 824</span>.<br>
+                        <p><strong>Step by step:</strong> Regroup 20 000 into <span class="math-code">1</span> ten-thousand, <span class="math-code">9</span> thousands, <span class="math-code">9</span> hundreds, <span class="math-code">9</span> tens, and <span class="math-code">10</span> ones → <span class="math-code">12 176</span>.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 4 (Ceros intercalados):</strong> Calcular <span class="math-code">5 004 − 2 739</span>.<br>
+                        <p><strong>Paso a paso:</strong> El 5 presta hasta llegar al 4 (que se vuelve 14), dejando los dos ceros del medio en 9: <span class="math-code">14−9=5</span>, <span class="math-code">9−3=6</span>, <span class="math-code">9−7=2</span>, <span class="math-code">4−2=2</span> → <span class="math-code">2 265</span>.</p>`,
+                        EN: `<strong>Example 4 (Middle zeros):</strong> Compute <span class="math-code">5 004 − 2 739</span>.<br>
+                        <p><strong>Step by step:</strong> The 5 regroups to make 4 into 14, leaving both middle zeros as 9: <span class="math-code">2 265</span>.</p>`
+                    }
+                ]
+            },
+            {
+                id: 5,
+                module: 2,
+                title: {
+                    ES: "6. Las Cuatro Operaciones Básicas con Números Naturales",
+                    EN: "6. The Four Basic Operations with Natural Numbers"
+                },
+                content: {
+                    ES: `Para resolver problemas cotidianos con <strong>adición (+), sustracción (−), multiplicación (×) y división (÷)</strong>:<br>
+                    1. <strong>Lee e identifica los datos</strong> y la pregunta exacta.<br>
+                    2. <strong>Elige la operación adecuada:</strong> juntar/agregar (<span class="math-code">+</span>), comparar/quitar/hallar lo que falta (<span class="math-code">−</span>), repetir grupos iguales (<span class="math-code">×</span>), repartir en partes iguales (<span class="math-code">÷</span>).<br>
+                    3. Si hay operaciones combinadas sin paréntesis, resuelve primero multiplicaciones y divisiones, y luego sumas y restas.`,
+                    EN: `To solve everyday problems with <strong>addition (+), subtraction (−), multiplication (×), and division (÷)</strong>:<br>
+                    1. <strong>Read and identify the given data</strong> and the exact question.<br>
+                    2. <strong>Choose the right operation:</strong> combine/add (<span class="math-code">+</span>), compare/take away/find what's left (<span class="math-code">−</span>), repeat equal groups (<span class="math-code">×</span>), share equally (<span class="math-code">÷</span>).<br>
+                    3. In combined expressions without parentheses, do multiplication/division first, then addition/subtraction.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Compra y cambio):</strong> Lena compra <span class="math-code">3</span> cuadernos a <span class="math-code">4 500</span> pesos cada uno y paga con <span class="math-code">20 000</span> pesos.<br>
+                        <p><strong>Paso a paso:</strong> Costo total: <span class="math-code">3 × 4 500 = 13 500</span>. Cambio: <span class="math-code">20 000 − 13 500 = 6 500</span> pesos.</p>`,
+                        EN: `<strong>Example 1 (Shopping & change):</strong> Lena buys <span class="math-code">3</span> notebooks at <span class="math-code">4 500</span> pesos each and pays with <span class="math-code">20 000</span> pesos.<br>
+                        <p><strong>Step by step:</strong> Total cost: <span class="math-code">3 × 4 500 = 13 500</span>. Change: <span class="math-code">20 000 − 13 500 = 6 500</span> pesos.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Colección de láminas):</strong> Tenía <span class="math-code">125</span> láminas, regaló <span class="math-code">17</span> y compró <span class="math-code">4</span> sobres de <span class="math-code">6</span> láminas cada uno.<br>
+                        <p><strong>Paso a paso:</strong> <span class="math-code">125 − 17 + (4 × 6) = 108 + 24 = 132</span> láminas.</p>`,
+                        EN: `<strong>Example 2 (Sticker collection):</strong> Had <span class="math-code">125</span> stickers, gave away <span class="math-code">17</span>, and bought <span class="math-code">4</span> packs of <span class="math-code">6</span> stickers.<br>
+                        <p><strong>Step by step:</strong> <span class="math-code">125 − 17 + (4 × 6) = 108 + 24 = 132</span> stickers.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Reparto después de juntar):</strong> Dos amigas juntan <span class="math-code">28</span> y <span class="math-code">35</span> canicas para guardarlas en <span class="math-code">7</span> bolsas iguales.<br>
+                        <p><strong>Paso a paso:</strong> Total de canicas: <span class="math-code">28 + 35 = 63</span>. En cada bolsa van <span class="math-code">63 ÷ 7 = 9</span> canicas.</p>`,
+                        EN: `<strong>Example 3 (Combine then share):</strong> Two friends combine <span class="math-code">28</span> and <span class="math-code">35</span> marbles into <span class="math-code">7</span> equal bags.<br>
+                        <p><strong>Step by step:</strong> Total marbles: <span class="math-code">28 + 35 = 63</span>. Each bag gets <span class="math-code">63 ÷ 7 = 9</span> marbles.</p>`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 4 (Ahorro semanal):</strong> Un patín cuesta <span class="math-code">96 000</span> pesos. Lena ya tiene <span class="math-code">40 000</span> y ahorrará el resto en <span class="math-code">8</span> semanas iguales.<br>
+                        <p><strong>Paso a paso:</strong> Falta ahorrar <span class="math-code">96 000 − 40 000 = 56 000</span>. Cada semana debe ahorrar <span class="math-code">56 000 ÷ 8 = 7 000</span> pesos.</p>`,
+                        EN: `<strong>Example 4 (Weekly savings):</strong> A scooter costs <span class="math-code">96 000</span> pesos. Lena has <span class="math-code">40 000</span> and will save the rest over <span class="math-code">8</span> equal weeks.<br>
+                        <p><strong>Step by step:</strong> Amount left: <span class="math-code">96 000 − 40 000 = 56 000</span>. Each week she saves <span class="math-code">56 000 ÷ 8 = 7 000</span> pesos.</p>`
+                    }
+                ]
+            }
+        ];
+
+        function formatNumber(num) {
+            if (num === null || num === undefined) return '';
+            const n = parseFloat(num);
+            if (isNaN(n)) return num;
+            const parts = n.toString().split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            return parts.join(',');
+        }
+
+        /* ==========================================================================
+           3. NAVEGACIÓN, TEMA, IDIOMA Y REINICIO
+           ========================================================================== */
+        function applyThemeUI() {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            const btn = document.getElementById('themeToggleBtn');
+            if (btn) btn.innerText = currentTheme === 'light' ? '🌙' : '☀️';
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem(STORAGE_KEYS.theme, currentTheme);
+            applyThemeUI();
+            renderLab();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ES' ? 'EN' : 'ES';
+            localStorage.setItem(STORAGE_KEYS.lang, currentLang);
+            document.getElementById('langToggleBtn').innerText = currentLang === 'ES' ? '🌐 ES' : '🌐 EN';
+            updateI18nText();
+            renderGoals();
+            renderTheory();
+            renderLab();
+            generateQuiz();
+        }
+
+        function updateI18nText() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.innerText = i18n[currentLang][key];
+                }
+            });
+            document.title = i18n[currentLang].app_title;
+        }
+
+        function switchTab(tabId, btnEl) {
+            currentTab = tabId;
+            localStorage.setItem(STORAGE_KEYS.tab, tabId);
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            const targetBtn = btnEl || document.getElementById(`nav-${tabId}`);
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+                targetBtn.setAttribute('aria-selected', 'true');
+            }
+            const targetSection = document.getElementById(`tab-${tabId}`);
+            if (targetSection) targetSection.classList.add('active');
+
+            if (tabId === 'laboratorio') renderLab();
+            if (tabId === 'quiz') {
+                setTimeout(() => {
+                    Object.keys(canvasInstances).forEach(idx => syncCanvasResolution(idx));
+                }, 50);
+            }
+        }
+
+        function openTopicFromHome(topicId) {
+            switchTab('teoria', document.getElementById('nav-teoria'));
+            const targetAcc = document.getElementById(`accordion-${topicId}`);
+            if (targetAcc) {
+                targetAcc.classList.add('active');
+                targetAcc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function resetApplication() {
+            if (!confirm(i18n[currentLang].reset_confirm)) return;
+            labState = Object.assign({}, defaultLabState);
+            localStorage.setItem(STORAGE_KEYS.labState, JSON.stringify(labState));
+            currentLabMode = 'division_groups';
+            localStorage.setItem(STORAGE_KEYS.labMode, currentLabMode);
+            renderLab();
+            generateQuiz();
+            switchTab('inicio', document.getElementById('nav-inicio'));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderGoals() {
+            const list = document.getElementById('goals-list');
+            if (!list) return;
+            list.innerHTML = goalsData[currentLang].map(g => `<li style="margin-bottom:0.45rem;">${g}</li>`).join('');
+        }
+
+        function renderTheory() {
+            const container = document.getElementById('accordion-container');
+            if (!container) return;
+            const m1Items = theoryData.filter(t => t.module === 1);
+            const m2Items = theoryData.filter(t => t.module === 2);
+
+            const renderGroup = (items) => items.map(item => `
+                <div class="accordion-item" id="accordion-${item.id}">
+                    <button class="accordion-header" onclick="toggleAccordion(${item.id})" aria-expanded="false">
+                        <span>${item.title[currentLang]}</span>
+                        <span class="accordion-icon" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div>${item.content[currentLang]}</div>
+                        <div class="examples-grid">
+                            ${item.examples.map(ex => `
+                                <div class="example-box">
+                                    ${ex[currentLang]}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="trim-header">${i18n[currentLang].sec1_title}</div>
+                ${renderGroup(m1Items)}
+                <div class="trim-header">${i18n[currentLang].sec2_title}</div>
+                ${renderGroup(m2Items)}
+            `;
+        }
+
+        function toggleAccordion(id) {
+            const item = document.getElementById(`accordion-${id}`);
+            if (!item) return;
+            const isOpen = item.classList.toggle('active');
+            const headerBtn = item.querySelector('.accordion-header');
+            if (headerBtn) headerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+
+        /* ==========================================================================
+           4. LABORATORIO SVG INTERACTIVO (viewBox RESPONSIVO SIN TAMAÑOS FIJOS)
+           ========================================================================== */
+        function saveLabState() {
+            localStorage.setItem(STORAGE_KEYS.labState, JSON.stringify(labState));
+        }
+
+        function setLabMode(mode, btnEl) {
+            currentLabMode = mode;
+            localStorage.setItem(STORAGE_KEYS.labMode, mode);
+            const btnContainer = document.getElementById('lab-mode-buttons');
+            if (btnContainer) {
+                btnContainer.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+            }
+            const targetBtn = btnEl || document.getElementById(`lab-btn-${mode}`);
+            if (targetBtn) targetBtn.classList.add('active');
+            renderLab();
+        }
+
+        function renderLab() {
+            const controls = document.getElementById('lab-controls');
+            const svg = document.getElementById('svg-lab-viewport');
+            const metrics = document.getElementById('lab-metrics');
+            if (!controls || !svg || !metrics) return;
+            svg.innerHTML = '';
+
+            const btnContainer = document.getElementById('lab-mode-buttons');
+            if (btnContainer) {
+                btnContainer.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+                const activeBtn = document.getElementById(`lab-btn-${currentLabMode}`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+
+            const primaryColor = currentTheme === 'light' ? '#d81b60' : '#f06292';
+            const accentColor = currentTheme === 'light' ? '#f48fb1' : '#f8bbd0';
+            const mintColor = currentTheme === 'light' ? '#0d9488' : '#2dd4bf';
+            const textColor = currentTheme === 'light' ? '#4a1533' : '#fce4ec';
+            const cardBg = currentTheme === 'light' ? '#ffffff' : '#2d1422';
+
+            if (currentLabMode === 'division_groups') {
+                const maxDividend = 10 * labState.divisor - 1;
+                if (labState.dividend > maxDividend) labState.dividend = maxDividend;
+
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label for="slider-divisor">${currentLang === 'ES' ? 'Divisor (d — grupos)' : 'Divisor (d — groups)'}: <strong>${labState.divisor}</strong></label>
+                        <input id="slider-divisor" type="range" min="2" max="9" step="1" value="${labState.divisor}" oninput="labState.divisor = parseInt(this.value); saveLabState(); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label for="slider-dividend">${currentLang === 'ES' ? `Dividendo (D ≤ ${10 * labState.divisor - 1})` : `Dividend (D ≤ ${10 * labState.divisor - 1})`}: <strong>${labState.dividend}</strong></label>
+                        <input id="slider-dividend" type="range" min="1" max="${maxDividend}" step="1" value="${labState.dividend}" oninput="labState.dividend = parseInt(this.value); saveLabState(); renderLab();">
+                    </div>
+                `;
+
+                const D = labState.dividend;
+                const d = labState.divisor;
+                const q = Math.floor(D / d);
+                const r = D % d;
+
+                let groupsMarkup = '';
+                const cols = Math.min(d, 5);
+                const rows = Math.ceil(d / cols);
+                const boxW = 104;
+                const boxH = rows === 1 ? 145 : 102;
+                const gapX = 14;
+                const gapY = 14;
+                const totalGridW = cols * boxW + (cols - 1) * gapX;
+                const startX = (640 - totalGridW) / 2;
+                const startY = 58;
+
+                for (let g = 0; g < d; g++) {
+                    const col = g % cols;
+                    const row = Math.floor(g / cols);
+                    const gx = startX + col * (boxW + gapX);
+                    const gy = startY + row * (boxH + gapY);
+
+                    groupsMarkup += `<rect x="${gx}" y="${gy}" width="${boxW}" height="${boxH}" rx="10" fill="${cardBg}" stroke="${primaryColor}" stroke-width="2" />`;
+                    groupsMarkup += `<text x="${gx + boxW / 2}" y="${gy + 18}" fill="${textColor}" font-size="11" font-weight="700" text-anchor="middle">${currentLang === 'ES' ? 'Grupo' : 'Group'} ${g + 1}</text>`;
+
+                    for (let item = 0; item < q; item++) {
+                        const ic = item % 3;
+                        const ir = Math.floor(item / 3);
+                        const cx = gx + 24 + ic * 28;
+                        const cy = gy + 36 + ir * 22;
+                        groupsMarkup += `<circle cx="${cx}" cy="${cy}" r="8" fill="${primaryColor}" />`;
+                    }
+                }
+
+                let remMarkup = `<rect x="110" y="284" width="420" height="54" rx="10" fill="${cardBg}" stroke="${mintColor}" stroke-width="2" stroke-dasharray="6 4" />`;
+                remMarkup += `<text x="126" y="316" fill="${textColor}" font-size="13" font-weight="700">${currentLang === 'ES' ? 'Residuo (r):' : 'Remainder (r):'}</text>`;
+                if (r === 0) {
+                    remMarkup += `<text x="360" y="316" fill="${mintColor}" font-size="13" font-weight="700" text-anchor="middle">${currentLang === 'ES' ? '0 (¡División exacta!)' : '0 (Exact division!)'}</text>`;
+                } else {
+                    for (let k = 0; k < r; k++) {
+                        remMarkup += `<circle cx="${235 + k * 28}" cy="311" r="9" fill="${mintColor}" />`;
+                    }
+                }
+
+                svg.innerHTML = `
+                    <text x="320" y="34" fill="${textColor}" font-size="16" font-weight="700" text-anchor="middle">${D} ÷ ${d}  ⇒  ${currentLang === 'ES' ? 'Cociente' : 'Quotient'} = ${q}, ${currentLang === 'ES' ? 'Residuo' : 'Remainder'} = ${r}</text>
+                    ${groupsMarkup}
+                    ${remMarkup}
+                `;
+
+                metrics.innerHTML = `${currentLang === 'ES' ? 'Comprobación' : 'Verification'}: <strong>${D} = (${d} × ${q}) + ${r}</strong> — <span style="color:${mintColor};">${r === 0 ? (currentLang === 'ES' ? 'División Exacta' : 'Exact Division') : (currentLang === 'ES' ? 'División Inexacta' : 'Inexact Division')}</span>`;
+
+            } else if (currentLabMode === 'power_growth') {
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label for="slider-base">${currentLang === 'ES' ? 'Base (factor que se repite)' : 'Base (repeated factor)'}: <strong>${labState.powBase}</strong></label>
+                        <input id="slider-base" type="range" min="2" max="5" step="1" value="${labState.powBase}" oninput="labState.powBase = parseInt(this.value); saveLabState(); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label for="slider-exp">${currentLang === 'ES' ? 'Exponente (veces que se multiplica)' : 'Exponent (times multiplied)'}: <strong>${labState.powExp}</strong></label>
+                        <input id="slider-exp" type="range" min="1" max="4" step="1" value="${labState.powExp}" oninput="labState.powExp = parseInt(this.value); saveLabState(); renderLab();">
+                    </div>
+                `;
+
+                const b = labState.powBase;
+                const e = labState.powExp;
+                const val = Math.pow(b, e);
+                const chain = Array(e).fill(b).join(' × ');
+
+                let cardsSvg = '';
+                const cardW = 92;
+                const gap = 28;
+                const totalW = e * cardW + (e - 1) * gap;
+                const sx = (640 - totalW) / 2;
+
+                for (let i = 0; i < e; i++) {
+                    const x = sx + i * (cardW + gap);
+                    cardsSvg += `
+                        <rect x="${x}" y="95" width="${cardW}" height="92" rx="12" fill="${cardBg}" stroke="${primaryColor}" stroke-width="2.5" />
+                        <text x="${x + cardW / 2}" y="138" fill="${primaryColor}" font-size="26" font-weight="700" text-anchor="middle">${b}</text>
+                        <text x="${x + cardW / 2}" y="168" fill="${textColor}" font-size="11" font-weight="600" text-anchor="middle">${currentLang === 'ES' ? 'Factor' : 'Factor'} #${i + 1}</text>
+                    `;
+                    if (i < e - 1) {
+                        cardsSvg += `<text x="${x + cardW + gap / 2}" y="146" fill="${mintColor}" font-size="22" font-weight="700" text-anchor="middle">×</text>`;
+                    }
+                }
+
+                svg.innerHTML = `
+                    <text x="320" y="45" fill="${textColor}" font-size="18" font-weight="700" text-anchor="middle">${currentLang === 'ES' ? 'Potencia' : 'Power'}: ${b} ^ ${e} = ${formatNumber(val)}</text>
+                    ${cardsSvg}
+                    <rect x="90" y="225" width="460" height="84" rx="12" fill="${cardBg}" stroke="${accentColor}" stroke-width="2" />
+                    <text x="320" y="258" fill="${textColor}" font-size="16" font-weight="600" text-anchor="middle">${chain}</text>
+                    <text x="320" y="290" fill="${primaryColor}" font-size="20" font-weight="700" text-anchor="middle">= ${formatNumber(val)}</text>
+                `;
+
+                metrics.innerHTML = `${currentLang === 'ES' ? 'Base' : 'Base'}: <strong>${b}</strong> | ${currentLang === 'ES' ? 'Exponente' : 'Exponent'}: <strong>${e}</strong> | ${currentLang === 'ES' ? 'Potencia' : 'Result'}: <strong>${formatNumber(val)}</strong>`;
+
+            } else if (currentLabMode === 'short_mult') {
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label for="slider-factor">${currentLang === 'ES' ? 'Número inicial' : 'Starting number'}: <strong>${labState.multFactor}</strong></label>
+                        <input id="slider-factor" type="range" min="2" max="45" step="1" value="${labState.multFactor}" oninput="labState.multFactor = parseInt(this.value); saveLabState(); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label for="slider-zeros">${currentLang === 'ES' ? 'Potencia de 10' : 'Power of 10'}: <strong>10<sup>${labState.multZeros}</sup> = ${formatNumber(Math.pow(10, labState.multZeros))}</strong></label>
+                        <input id="slider-zeros" type="range" min="1" max="3" step="1" value="${labState.multZeros}" oninput="labState.multZeros = parseInt(this.value); saveLabState(); renderLab();">
+                    </div>
+                `;
+
+                const f = labState.multFactor;
+                const z = labState.multZeros;
+                const mult10 = Math.pow(10, z);
+                const res = f * mult10;
+                const zerosStr = '0'.repeat(z);
+
+                svg.innerHTML = `
+                    <text x="320" y="45" fill="${textColor}" font-size="17" font-weight="700" text-anchor="middle">${currentLang === 'ES' ? 'Multiplicación abreviada por' : 'Shortcut multiplication by'} ${formatNumber(mult10)}</text>
+
+                    <rect x="65" y="95" width="150" height="86" rx="12" fill="${cardBg}" stroke="${primaryColor}" stroke-width="2" />
+                    <text x="140" y="146" fill="${textColor}" font-size="26" font-weight="700" text-anchor="middle">${f}</text>
+
+                    <text x="242" y="146" fill="${primaryColor}" font-size="24" font-weight="700" text-anchor="middle">×</text>
+
+                    <rect x="270" y="95" width="150" height="86" rx="12" fill="${cardBg}" stroke="${mintColor}" stroke-width="2" />
+                    <text x="345" y="146" fill="${mintColor}" font-size="24" font-weight="700" text-anchor="middle">1<tspan fill="${primaryColor}">${zerosStr}</tspan></text>
+
+                    <text x="448" y="146" fill="${primaryColor}" font-size="24" font-weight="700" text-anchor="middle">=</text>
+
+                    <rect x="475" y="95" width="125" height="86" rx="12" fill="${cardBg}" stroke="${primaryColor}" stroke-width="2.5" />
+                    <text x="537" y="146" fill="${textColor}" font-size="22" font-weight="700" text-anchor="middle">${f}<tspan fill="${mintColor}">${zerosStr}</tspan></text>
+
+                    <text x="320" y="245" fill="${textColor}" font-size="15" font-weight="600" text-anchor="middle">${currentLang === 'ES' ? `Se conserva ${f} y se agregan ${z} cero(s) a la derecha` : `Keep ${f} and append ${z} zero(s) to the right`}</text>
+                    <text x="320" y="285" fill="${primaryColor}" font-size="22" font-weight="700" text-anchor="middle">${formatNumber(res)}</text>
+                `;
+
+                metrics.innerHTML = `<strong>${f} × ${formatNumber(mult10)} = ${formatNumber(res)}</strong>`;
+            }
+        }
+
+        /* ==========================================================================
+           5. BANCO DE PROBLEMAS DE APLICACIÓN (CON SUGERENCIAS BAJO BOTÓN Y CAPTURA)
+           ========================================================================== */
+        let quizData = [];
+        let answeredStatus = {};
+        let selectedOptionByQ = {};
+        let canvasInstances = {};
+
+        function updateScorePill() {
+            const pill = document.getElementById('quiz-score-pill');
+            if (!pill) return;
+            const correctCount = Object.values(answeredStatus).filter(Boolean).length;
+            pill.innerText = `⭐ ${correctCount} / ${quizData.length}`;
+        }
+
+        function toggleHint(idx) {
+            const box = document.getElementById(`hint-box-${idx}`);
+            const btn = document.getElementById(`hint-btn-${idx}`);
+            if (!box || !btn) return;
+            const visible = box.classList.toggle('visible');
+            btn.innerHTML = visible ? i18n[currentLang].hint_hide : i18n[currentLang].hint_show;
+        }
+
+        function stripTagsToPlainText(htmlStr) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = htmlStr;
+            return (tmp.textContent || tmp.innerText || '').trim();
+        }
+
+        function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(/\s+/);
+            let line = '';
+            let currY = y;
+            for (let i = 0; i < words.length; i++) {
+                const testLine = line ? `${line} ${words[i]}` : words[i];
+                if (ctx.measureText(testLine).width > maxWidth && line) {
+                    ctx.fillText(line, x, currY);
+                    line = words[i];
+                    currY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            if (line) {
+                ctx.fillText(line, x, currY);
+                currY += lineHeight;
+            }
+            return currY;
+        }
+
+        async function captureQuizCard(idx) {
+            const q = quizData[idx];
+            const inst = canvasInstances[idx];
+            const statusEl = document.getElementById(`capture-status-${idx}`);
+            const feedbackEl = document.getElementById(`feedback-${idx}`);
+            if (!q || !inst) return;
+
+            const width = 920;
+            const pad = 28;
+            const contentW = width - pad * 2;
+
+            const questionPlain = stripTagsToPlainText(q.question[currentLang]);
+            const selIdx = selectedOptionByQ[idx];
+            const selectedAnswerText = (selIdx !== undefined && q.options[selIdx] !== undefined)
+                ? stripTagsToPlainText(q.options[selIdx])
+                : i18n[currentLang].capture_none;
+            const feedbackText = (feedbackEl && feedbackEl.innerText.trim())
+                ? feedbackEl.innerText.trim()
+                : i18n[currentLang].capture_no_feedback;
+
+            // Medición previa de altura usando un canvas temporal
+            const measureCanvas = document.createElement('canvas');
+            const mCtx = measureCanvas.getContext('2d');
+            const measureLines = (txt, font, maxW, lh) => {
+                mCtx.font = font;
+                const words = txt.split(/\s+/);
+                let line = '';
+                let count = 0;
+                for (let i = 0; i < words.length; i++) {
+                    const test = line ? `${line} ${words[i]}` : words[i];
+                    if (mCtx.measureText(test).width > maxW && line) {
+                        count++;
+                        line = words[i];
+                    } else {
+                        line = test;
+                    }
+                }
+                if (line) count++;
+                return Math.max(1, count) * lh;
+            };
+
+            const qH = measureLines(questionPlain, '600 18px Poppins, sans-serif', contentW - 24, 26);
+            const ansH = measureLines(selectedAnswerText, '600 16px Poppins, sans-serif', contentW - 24, 24);
+            const fbH = measureLines(feedbackText, '600 16px Poppins, sans-serif', contentW - 24, 24);
+
+            const sketchW = inst.canvas.width || 600;
+            const sketchH = inst.canvas.height || 220;
+            const drawSketchW = contentW;
+            const drawSketchH = Math.round((sketchH / sketchW) * drawSketchW);
+
+            const totalHeight =
+                pad +
+                34 + // Cabecera y tema
+                16 +
+                (qH + 24) + // Enunciado
+                14 +
+                (ansH + 42) + // Respuesta
+                14 +
+                (fbH + 42) + // Retroalimentación
+                18 +
+                (drawSketchH + 44) + // Lienzo
+                pad;
+
+            const outCanvas = document.createElement('canvas');
+            outCanvas.width = width;
+            outCanvas.height = totalHeight;
+            const ctx = outCanvas.getContext('2d');
+
+            // Fondo general
+            ctx.fillStyle = '#fff5f8';
+            ctx.fillRect(0, 0, width, totalHeight);
+
+            // Tarjeta principal
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#f8bbd0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(12, 12, width - 24, totalHeight - 24, 16);
+            ctx.fill();
+            ctx.stroke();
+
+            let y = pad + 8;
+
+            // Encabezado del reto
+            ctx.fillStyle = '#d81b60';
+            ctx.font = '700 15px Poppins, sans-serif';
+            ctx.fillText(`${q.topicName[currentLang]}  •  #${idx + 1}`, pad, y);
+            y += 28;
+
+            // Bloque Enunciado
+            ctx.fillStyle = '#fdf2f6';
+            ctx.strokeStyle = '#f8bbd0';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.roundRect(pad, y - 6, contentW, qH + 22, 10);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#4a1533';
+            ctx.font = '600 18px Poppins, sans-serif';
+            y = wrapCanvasText(ctx, questionPlain, pad + 12, y + 18, contentW - 24, 26) + 18;
+
+            // Bloque Respuesta
+            ctx.fillStyle = '#f3e5f5';
+            ctx.strokeStyle = '#ce93d8';
+            ctx.beginPath();
+            ctx.roundRect(pad, y - 6, contentW, ansH + 38, 10);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#880e4f';
+            ctx.font = '700 13px Poppins, sans-serif';
+            ctx.fillText(i18n[currentLang].capture_answer_label.toUpperCase(), pad + 12, y + 13);
+
+            ctx.fillStyle = '#4a1533';
+            ctx.font = '600 16px Poppins, sans-serif';
+            y = wrapCanvasText(ctx, selectedAnswerText, pad + 12, y + 34, contentW - 24, 24) + 16;
+
+            // Bloque Retroalimentación
+            const isCorrect = answeredStatus[idx] === true;
+            const isWrong = answeredStatus[idx] === false;
+            ctx.fillStyle = isCorrect ? '#e0f2f1' : (isWrong ? '#ffe4e6' : '#fff8fa');
+            ctx.strokeStyle = isCorrect ? '#0d9488' : (isWrong ? '#e11d48' : '#f48fb1');
+            ctx.beginPath();
+            ctx.roundRect(pad, y - 6, contentW, fbH + 38, 10);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = isCorrect ? '#0d9488' : (isWrong ? '#e11d48' : '#854d6b');
+            ctx.font = '700 13px Poppins, sans-serif';
+            ctx.fillText(i18n[currentLang].capture_feedback_label.toUpperCase(), pad + 12, y + 13);
+
+            ctx.fillStyle = isCorrect ? '#0f766e' : (isWrong ? '#be123c' : '#4a1533');
+            ctx.font = '600 16px Poppins, sans-serif';
+            y = wrapCanvasText(ctx, feedbackText, pad + 12, y + 34, contentW - 24, 24) + 20;
+
+            // Bloque Lienzo
+            ctx.fillStyle = '#4a1533';
+            ctx.font = '700 13px Poppins, sans-serif';
+            ctx.fillText(currentLang === 'ES' ? 'PIZARRA / LIENZO DE TRABAJO' : 'WORK SKETCHPAD / CANVAS', pad, y + 8);
+            y += 18;
+
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#f8bbd0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(pad, y, drawSketchW, drawSketchH, 10);
+            ctx.fill();
+            ctx.save();
+            ctx.beginPath();
+            ctx.roundRect(pad, y, drawSketchW, drawSketchH, 10);
+            ctx.clip();
+            ctx.drawImage(inst.canvas, pad, y, drawSketchW, drawSketchH);
+            ctx.restore();
+            ctx.stroke();
+
+            const filename = `Lena_Reto_${idx + 1}.png`;
+            const triggerDownload = () => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = outCanvas.toDataURL('image/png');
+                link.click();
+            };
+
+            let copied = false;
+            if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
+                try {
+                    const blob = await new Promise(resolve => outCanvas.toBlob(resolve, 'image/png'));
+                    if (blob) {
+                        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                        copied = true;
+                    }
+                } catch (_) {
+                    copied = false;
+                }
+            }
+
+            triggerDownload();
+            if (statusEl) {
+                statusEl.innerText = copied ? i18n[currentLang].capture_copied : i18n[currentLang].capture_saved;
+                setTimeout(() => {
+                    if (statusEl) statusEl.innerText = '';
+                }, 3500);
+            }
+        }
+
+        function generateQuiz() {
+            answeredStatus = {};
+            selectedOptionByQ = {};
+            quizData = [
+                generateQ1DivisionExact(),
+                generateQ2DivisionRemainder(),
+                generateQ3MultiplicationTables1(),
+                generateQ4MultiplicationTables2(),
+                generateQ5Powers1(),
+                generateQ6Powers2(),
+                generateQ7ShortcutMult1(),
+                generateQ8ShortcutMult2(),
+                generateQ9SubtractionZeros1(),
+                generateQ10SubtractionZeros2(),
+                generateQ11FourOperations1(),
+                generateQ12FourOperations2()
+            ];
+
+            updateScorePill();
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = quizData.map((q, idx) => `
+                <div class="card quiz-card" id="quiz-card-${idx}">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.65rem;">
+                        <span class="badge">${q.topicName[currentLang]}</span>
+                        <span class="topic-tag">${currentLang === 'ES' ? 'Reto' : 'Challenge'} #${idx + 1}</span>
+                    </div>
+                    <div class="quiz-question">${q.question[currentLang]}</div>
+
+                    <!-- Sugerencia oculta y botón de captura de enunciado, respuesta, retroalimentación y lienzo -->
+                    <div class="hint-bar">
+                        <button type="button" class="hint-btn" id="hint-btn-${idx}" onclick="toggleHint(${idx})">${i18n[currentLang].hint_show}</button>
+                        <button type="button" class="capture-btn" id="capture-btn-${idx}" onclick="captureQuizCard(${idx})">${i18n[currentLang].capture_btn}</button>
+                        <span class="capture-status" id="capture-status-${idx}" role="status" aria-live="polite"></span>
+                        <div class="hint-box" id="hint-box-${idx}">${q.hint[currentLang]}</div>
+                    </div>
+
+                    <div class="quiz-options" id="options-group-${idx}">
+                        ${q.options.map((opt, oIdx) => `
+                            <button class="option-btn" id="opt-btn-${idx}-${oIdx}" onclick="checkAnswer(${idx}, ${oIdx})">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${idx}" role="status" aria-live="polite"></div>
+
+                    <!-- Pizarra vectorial para operaciones de Lena -->
+                    <div class="sketchpad-container">
+                        <div class="sketchpad-toolbar">
+                            <button type="button" class="tool-btn active" onclick="setCanvasTool(${idx}, 'pencil', this)">${i18n[currentLang].sketch_pencil}</button>
+                            <button type="button" class="tool-btn" onclick="setCanvasTool(${idx}, 'line', this)">${i18n[currentLang].sketch_line}</button>
+                            <button type="button" class="tool-btn" onclick="setCanvasTool(${idx}, 'rect', this)">${i18n[currentLang].sketch_rect}</button>
+                            <button type="button" class="tool-btn" onclick="setCanvasTool(${idx}, 'text', this)">${i18n[currentLang].sketch_text}</button>
+                            <button type="button" class="tool-btn" onclick="setCanvasTool(${idx}, 'eraser', this)">${i18n[currentLang].sketch_eraser}</button>
+                            <input type="color" id="color-${idx}" value="#4a1533" aria-label="Color de trazo" onchange="updateCanvasStyle(${idx})" style="width:28px; height:28px; border:none; cursor:pointer;">
+                            <input type="range" id="size-${idx}" min="1" max="14" value="3" aria-label="Grosor de trazo" onchange="updateCanvasStyle(${idx})" style="width:65px;">
+                            <button type="button" class="tool-btn" onclick="adjustCanvasHeight(${idx}, -50)" aria-label="Reducir altura">➖</button>
+                            <button type="button" class="tool-btn" onclick="adjustCanvasHeight(${idx}, 50)" aria-label="Aumentar altura">➕</button>
+                            <button type="button" class="tool-btn" onclick="clearCanvas(${idx})">${i18n[currentLang].sketch_clear}</button>
+                        </div>
+                        <div class="canvas-resize-wrapper" id="canvas-wrapper-${idx}">
+                            <canvas id="sketchpad-${idx}" class="sketchpad" aria-label="Pizarra de operaciones"></canvas>
+                        </div>
+                        <div class="canvas-resize-handle" onpointerdown="startCanvasResize(event, ${idx})">
+                            ${i18n[currentLang].resize_label}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            setTimeout(() => {
+                quizData.forEach((_, idx) => initCanvas(idx));
+            }, 80);
+        }
+
+        // 1. División exacta (D <= 10d - 1)
+        function generateQ1DivisionExact() {
+            const d = Math.floor(Math.random() * 6 + 4);
+            const q = Math.floor(Math.random() * 6 + 4);
+            const D = d * q;
+            const ansCorrect = currentLang === 'ES' ? `${q} bolsas y sobran 0` : `${q} bags and 0 left`;
+            const options = shuffle([
+                ansCorrect,
+                currentLang === 'ES' ? `${q - 1} bolsas y sobran ${d}` : `${q - 1} bags and ${d} left`,
+                currentLang === 'ES' ? `${q + 1} bolsas y sobran 0` : `${q + 1} bags and 0 left`,
+                currentLang === 'ES' ? `${q} bolsas y sobra 1` : `${q} bags and 1 left`
+            ]);
+            return {
+                topicName: { ES: "1. División Exacta", EN: "1. Exact Division" },
+                question: {
+                    ES: `Lena preparó ${D} galletas de chispas de chocolate y quiere empacarlas en bolsas con ${d} galletas cada una. ¿Cuántas bolsas completas arma y cuántas galletas sobran?`,
+                    EN: `Lena baked ${D} chocolate-chip cookies and wants to pack them into bags of ${d} cookies each. How many full bags can she make and how many cookies are left over?`
+                },
+                hint: {
+                    ES: `Busca qué número multiplicado por ${d} da exactamente ${D}. Como el resultado es exacto, el residuo es 0.`,
+                    EN: `Find which number multiplied by ${d} gives ${D} exactly. Since it fits evenly, the remainder is 0.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 2. División inexacta (D <= 10d - 1)
+        function generateQ2DivisionRemainder() {
+            const d = Math.floor(Math.random() * 5 + 5);
+            const q = Math.floor(Math.random() * 5 + 4);
+            const r = Math.floor(Math.random() * (d - 2) + 1);
+            const D = d * q + r;
+            const ansCorrect = currentLang === 'ES' ? `${q} páginas y sobran ${r}` : `${q} pages and ${r} left`;
+            const options = shuffle([
+                ansCorrect,
+                currentLang === 'ES' ? `${q + 1} páginas y sobran ${r}` : `${q + 1} pages and ${r} left`,
+                currentLang === 'ES' ? `${q} páginas y sobran ${r + 1}` : `${q} pages and ${r + 1} left`,
+                currentLang === 'ES' ? `${q - 1} páginas y sobran ${r + d}` : `${q - 1} pages and ${r + d} left`
+            ]);
+            return {
+                topicName: { ES: "1. División Inexacta", EN: "1. Inexact Division" },
+                question: {
+                    ES: `En su álbum de mascotas, Lena tiene ${D} fotos nuevas y caben ${d} fotos en cada página. ¿Cuántas páginas llena por completo y cuántas fotos quedan sin pegar?`,
+                    EN: `In her pet album, Lena has ${D} new photos and ${d} photos fit on each page. How many full pages does she fill and how many photos remain?`
+                },
+                hint: {
+                    ES: `Encuentra el múltiplo de ${d} más cercano a ${D} sin pasarte; ese factor es el número de páginas llenas y la diferencia hasta ${D} es el residuo.`,
+                    EN: `Find the multiple of ${d} closest to ${D} without going over; that factor is the number of full pages, and the difference up to ${D} is the remainder.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 3. Tablas de multiplicar (colecciones y grupos iguales)
+        function generateQ3MultiplicationTables1() {
+            const boxes = Math.floor(Math.random() * 4 + 6);
+            const perBox = Math.floor(Math.random() * 4 + 6);
+            const total = boxes * perBox;
+            const ansCorrect = `${total}`;
+            const options = shuffle(Array.from(new Set([
+                ansCorrect,
+                `${total + perBox}`,
+                `${total - boxes}`,
+                `${boxes + perBox}`
+            ])));
+            return {
+                topicName: { ES: "2. Tablas de Multiplicar", EN: "2. Multiplication Tables" },
+                question: {
+                    ES: `Para su taller de arte, Lena compró ${boxes} cajas de acuarelas y cada caja trae ${perBox} pastillas de color. ¿Cuántas pastillas tiene en total?`,
+                    EN: `For her art workshop, Lena bought ${boxes} watercolor boxes and each box has ${perBox} color pans. How many color pans does she have in total?`
+                },
+                hint: {
+                    ES: `Tienes ${boxes} grupos iguales de ${perBox} elementos cada uno; multiplica ambos valores usando las tablas.`,
+                    EN: `You have ${boxes} equal groups of ${perBox} items each; multiply both numbers using your times tables.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 4. Tablas de multiplicar (comparación en contexto de juego/deporte)
+        function generateQ4MultiplicationTables2() {
+            const laps = Math.floor(Math.random() * 4 + 6);
+            const mins = Math.floor(Math.random() * 4 + 5);
+            const total = laps * mins;
+            const ansCorrect = currentLang === 'ES' ? `${total} minutos` : `${total} minutes`;
+            const options = shuffle([
+                ansCorrect,
+                currentLang === 'ES' ? `${total + mins} minutos` : `${total + mins} minutes`,
+                currentLang === 'ES' ? `${total - laps} minutos` : `${total - laps} minutes`,
+                currentLang === 'ES' ? `${laps + mins} minutos` : `${laps + mins} minutes`
+            ]);
+            return {
+                topicName: { ES: "2. Tablas de Multiplicar", EN: "2. Multiplication Tables" },
+                question: {
+                    ES: `En su bicicleta, Lena tarda ${mins} minutos en dar una vuelta completa al parque. Si hoy dio ${laps} vueltas al mismo ritmo, ¿cuántos minutos pedaleó en total?`,
+                    EN: `On her bicycle, Lena takes ${mins} minutes to ride one full lap around the park. If she rode ${laps} laps at the same pace today, how many minutes did she ride in total?`
+                },
+                hint: {
+                    ES: `Cada vuelta toma ${mins} minutos y se repite ${laps} veces. Plantea el producto ${laps} × ${mins}.`,
+                    EN: `Each lap takes ${mins} minutes and repeats ${laps} times. Set up the product ${laps} × ${mins}.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 5. Potenciación (cuadrados y cubos naturales)
+        function generateQ5Powers1() {
+            const pairs = [
+                { b: 2, e: 4, v: 16 },
+                { b: 3, e: 3, v: 27 },
+                { b: 4, e: 3, v: 64 },
+                { b: 5, e: 3, v: 125 },
+                { b: 6, e: 2, v: 36 },
+                { b: 7, e: 2, v: 49 }
+            ];
+            const pick = pairs[Math.floor(Math.random() * pairs.length)];
+            const ansCorrect = `${pick.v}`;
+            const options = shuffle(Array.from(new Set([
+                ansCorrect,
+                `${pick.b * pick.e}`,
+                `${pick.v + pick.b}`,
+                `${Math.pow(pick.b, pick.e - 1)}`
+            ])));
+            return {
+                topicName: { ES: "3. Introducción a la Potenciación", EN: "3. Introduction to Powers" },
+                question: {
+                    ES: `En un juego de mesa mágico, cada turno multiplica las gemas por ${pick.b}. Si Lena empieza con 1 gema y pasan ${pick.e} turnos, ¿cuántas gemas tendrá (${pick.b}<sup>${pick.e}</sup>)?`,
+                    EN: `In a magical board game, each turn multiplies your gems by ${pick.b}. If Lena starts with 1 gem and ${pick.e} turns pass, how many gems will she have (${pick.b}<sup>${pick.e}</sup>)?`
+                },
+                hint: {
+                    ES: `El exponente ${pick.e} indica cuántas veces debes multiplicar la base ${pick.b} por sí misma (no multipliques base por exponente).`,
+                    EN: `The exponent ${pick.e} tells how many times to multiply the base ${pick.b} by itself (do not multiply base by exponent).`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 6. Potenciación (organización en cubos o estantes)
+        function generateQ6Powers2() {
+            const n = Math.floor(Math.random() * 3 + 3);
+            const ansCorrect = `${n}<sup>3</sup> = ${n * n * n}`;
+            const options = shuffle([
+                ansCorrect,
+                `${n} × 3 = ${n * 3}`,
+                `3<sup>${n}</sup> = ${Math.pow(3, n)}`,
+                `${n}<sup>2</sup> = ${n * n}`
+            ]);
+            return {
+                topicName: { ES: "3. Introducción a la Potenciación", EN: "3. Introduction to Powers" },
+                question: {
+                    ES: `Para organizar sus cuentas de pulseras, Lena usa ${n} organizadores; cada organizador tiene ${n} cajones y en cada cajón guarda ${n} bolsas. ¿Qué potencia expresa el total de bolsas?`,
+                    EN: `To organize her bracelet beads, Lena uses ${n} organizers; each organizer has ${n} drawers, and each drawer holds ${n} bags. Which power expresses the total number of bags?`
+                },
+                hint: {
+                    ES: `Como el factor ${n} aparece repetido 3 veces (${n} × ${n} × ${n}), la base es ${n} y el exponente es 3.`,
+                    EN: `Since the factor ${n} is repeated 3 times (${n} × ${n} × ${n}), the base is ${n} and the exponent is 3.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 7. Multiplicación abreviada por 10, 100 o 1 000
+        function generateQ7ShortcutMult1() {
+            const qty = Math.floor(Math.random() * 25 + 12);
+            const mult = [100, 1000][Math.floor(Math.random() * 2)];
+            const total = qty * mult;
+            const ansCorrect = formatNumber(total);
+            const options = shuffle([
+                ansCorrect,
+                formatNumber(qty * (mult / 10)),
+                formatNumber(qty * (mult * 10)),
+                formatNumber(qty + mult)
+            ]);
+            return {
+                topicName: { ES: "4. Multiplicación Abreviada", EN: "4. Shortcut Multiplication" },
+                question: {
+                    ES: `En una jornada ecológica escolar, cada estudiante recolectó ${formatNumber(mult)} gramos de papel reciclable. Si participaron ${qty} estudiantes, ¿cuántos gramos recolectaron en total?`,
+                    EN: `During a school eco-drive, each student collected ${formatNumber(mult)} grams of recyclable paper. If ${qty} students participated, how many grams did they collect in total?`
+                },
+                hint: {
+                    ES: `Para multiplicar ${qty} por ${formatNumber(mult)} de forma abreviada, escribe ${qty} y agrega tantos ceros como tenga ${formatNumber(mult)}.`,
+                    EN: `To multiply ${qty} by ${formatNumber(mult)} quickly, write ${qty} and append as many zeros as ${formatNumber(mult)} has.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 8. Multiplicación abreviada por decenas/centenas exactas o por 11
+        function generateQ8ShortcutMult2() {
+            const mode = Math.floor(Math.random() * 2);
+            if (mode === 0) {
+                const a = Math.floor(Math.random() * 6 + 3) * 10;
+                const b = Math.floor(Math.random() * 6 + 2) * 100;
+                const total = a * b;
+                const ansCorrect = formatNumber(total);
+                const options = shuffle([
+                    ansCorrect,
+                    formatNumber(total / 10),
+                    formatNumber(total * 10),
+                    formatNumber((a / 10 + b / 100) * 1000)
+                ]);
+                return {
+                    topicName: { ES: "4. Multiplicación Abreviada", EN: "4. Shortcut Multiplication" },
+                    question: {
+                        ES: `Un paquete tiene ${a} tarjetas y una caja grande contiene ${b} paquetes. ¿Cuántas tarjetas hay en toda la caja grande?`,
+                        EN: `One pack holds ${a} cards and a big box contains ${b} packs. How many cards are in the entire big box?`
+                    },
+                    hint: {
+                        ES: `Multiplica primero las cifras distintas de cero (${a / 10} × ${b / 100}) y luego agrega al final los 3 ceros de ambos factores.`,
+                        EN: `Multiply the non-zero digits first (${a / 10} × ${b / 100}) and then append all 3 trailing zeros from both factors.`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const n = Math.floor(Math.random() * 30 + 15);
+                const total = n * 11;
+                const ansCorrect = formatNumber(total);
+                const options = shuffle([
+                    ansCorrect,
+                    formatNumber(n * 10),
+                    formatNumber(n * 11 + 10),
+                    formatNumber(n * 9)
+                ]);
+                return {
+                    topicName: { ES: "4. Multiplicación Abreviada", EN: "4. Shortcut Multiplication" },
+                    question: {
+                        ES: `Lena armó ${n} ramos de flores y puso exactamente 11 flores en cada ramo. ¿Cuántas flores utilizó en total?`,
+                        EN: `Lena made ${n} flower bouquets and put 11 flowers in each bouquet. How many flowers did she use in total?`
+                    },
+                    hint: {
+                        ES: `Usa el atajo de multiplicar por 11: calcula (${n} × 10) y súmale una vez ${n}.`,
+                        EN: `Use the multiply-by-11 shortcut: compute (${n} × 10) and add ${n} once.`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 9. Sustracción con varios ceros en el minuendo (compras y dinero)
+        function generateQ9SubtractionZeros1() {
+            const minuend = [10000, 20000, 50000][Math.floor(Math.random() * 3)];
+            const subtrahend = Math.floor(Math.random() * 5500 + 2345);
+            const diff = minuend - subtrahend;
+            const ansCorrect = formatNumber(diff);
+            const options = shuffle([
+                ansCorrect,
+                formatNumber(diff + 100),
+                formatNumber(diff - 10),
+                formatNumber(minuend - subtrahend + 1000)
+            ]);
+            return {
+                topicName: { ES: "5. Sustracción con Varios Ceros", EN: "5. Subtraction Across Zeros" },
+                question: {
+                    ES: `Lena tenía ${formatNumber(minuend)} pesos en su alcancía y gastó ${formatNumber(subtrahend)} pesos en un set de marcadores pastel. ¿Cuánto dinero le quedó en la alcancía?`,
+                    EN: `Lena had ${formatNumber(minuend)} pesos in her piggy bank and spent ${formatNumber(subtrahend)} pesos on a pastel marker set. How much money was left in her piggy bank?`
+                },
+                hint: {
+                    ES: `Al restar ${formatNumber(minuend)} − ${formatNumber(subtrahend)}, recuerda desagrupar los ceros intermedios en 9 y las unidades en 10. Comprueba sumando tu resultado + ${formatNumber(subtrahend)}.`,
+                    EN: `When subtracting ${formatNumber(minuend)} − ${formatNumber(subtrahend)}, regroup middle zeros into 9 and the ones place into 10. Check by adding your result + ${formatNumber(subtrahend)}.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 10. Sustracción con varios ceros en el minuendo (metas y distancias/puntos)
+        function generateQ10SubtractionZeros2() {
+            const goal = [3000, 4000, 6000, 8000][Math.floor(Math.random() * 4)];
+            const current = Math.floor(Math.random() * 1400 + 1126);
+            const missing = goal - current;
+            const ansCorrect = `${formatNumber(missing)} puntos`;
+            const options = shuffle([
+                ansCorrect,
+                `${formatNumber(missing + 100)} puntos`,
+                `${formatNumber(missing - 100)} puntos`,
+                `${formatNumber(missing + 10)} puntos`
+            ]);
+            return {
+                topicName: { ES: "5. Sustracción con Varios Ceros", EN: "5. Subtraction Across Zeros" },
+                question: {
+                    ES: `Para desbloquear el nivel secreto de su videojuego favorito, Lena necesita ${formatNumber(goal)} puntos. Si ya lleva ${formatNumber(current)} puntos, ¿cuántos puntos le faltan?`,
+                    EN: `To unlock the secret level in her favorite video game, Lena needs ${formatNumber(goal)} points. If she already has ${formatNumber(current)} points, how many points does she still need?`
+                },
+                hint: {
+                    ES: `Calcula la diferencia ${formatNumber(goal)} − ${formatNumber(current)} desagrupando desde la cifra de los miles.`,
+                    EN: `Compute the difference ${formatNumber(goal)} − ${formatNumber(current)} by regrouping from the thousands digit.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 11. Las cuatro operaciones básicas (problema de 2 pasos: multiplicar y restar)
+        function generateQ11FourOperations1() {
+            const items = Math.floor(Math.random() * 3 + 3);
+            const price = [2400, 3200, 3500, 4200][Math.floor(Math.random() * 4)];
+            const paid = 20000;
+            const spent = items * price;
+            const change = paid - spent;
+            const ansCorrect = `${formatNumber(change)} pesos`;
+            const options = shuffle([
+                ansCorrect,
+                `${formatNumber(spent)} pesos`,
+                `${formatNumber(change + 1000)} pesos`,
+                `${formatNumber(paid - price)} pesos`
+            ]);
+            return {
+                topicName: { ES: "6. Cuatro Operaciones Básicas", EN: "6. Four Basic Operations" },
+                question: {
+                    ES: `En la papelería, Lena compra ${items} cuadernos de dibujo a ${formatNumber(price)} pesos cada uno y paga con un billete de ${formatNumber(paid)} pesos. ¿Cuánto dinero recibe de cambio?`,
+                    EN: `At the stationery shop, Lena buys ${items} sketchbooks at ${formatNumber(price)} pesos each and pays with a ${formatNumber(paid)}-peso bill. How much change does she receive?`
+                },
+                hint: {
+                    ES: `Primero halla el costo total de los ${items} cuadernos multiplicando, y luego resta ese valor de ${formatNumber(paid)}.`,
+                    EN: `First find the total cost of the ${items} sketchbooks by multiplying, then subtract that total from ${formatNumber(paid)}.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 12. Las cuatro operaciones básicas (juntar y repartir en partes iguales)
+        function generateQ12FourOperations2() {
+            const d = Math.floor(Math.random() * 4 + 5);
+            const q = Math.floor(Math.random() * 4 + 5);
+            const total = d * q;
+            const part1 = Math.floor(total / 2) + 3;
+            const part2 = total - part1;
+            const ansCorrect = currentLang === 'ES' ? `${q} dulces en cada bolsa` : `${q} candies in each bag`;
+            const options = shuffle([
+                ansCorrect,
+                currentLang === 'ES' ? `${q + 1} dulces en cada bolsa` : `${q + 1} candies in each bag`,
+                currentLang === 'ES' ? `${q - 1} dulces en cada bolsa` : `${q - 1} candies in each bag`,
+                currentLang === 'ES' ? `${total} dulces en cada bolsa` : `${total} candies in each bag`
+            ]);
+            return {
+                topicName: { ES: "6. Cuatro Operaciones Básicas", EN: "6. Four Basic Operations" },
+                question: {
+                    ES: `Lena tiene ${part1} dulces de fresa y su primo le regala ${part2} dulces de menta. Si reparten todos los dulces en ${d} bolsas iguales para sus amigos, ¿cuántos dulces van en cada bolsa?`,
+                    EN: `Lena has ${part1} strawberry candies and her cousin gives her ${part2} mint candies. If they share all the candies equally into ${d} bags for friends, how many candies go in each bag?`
+                },
+                hint: {
+                    ES: `Primero suma los dulces de fresa y los de menta para conocer el total, y luego divide ese total entre las ${d} bolsas.`,
+                    EN: `First add the strawberry and mint candies to find the total, then divide that total among the ${d} bags.`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        function shuffle(arr) {
+            return arr.slice().sort(() => Math.random() - 0.5);
+        }
+
+        function checkAnswer(qIdx, optionIdx) {
+            const feedbackEl = document.getElementById(`feedback-${qIdx}`);
+            const optionsGroup = document.getElementById(`options-group-${qIdx}`);
+            const selectedBtn = document.getElementById(`opt-btn-${qIdx}-${optionIdx}`);
+            const q = quizData[qIdx];
+
+            selectedOptionByQ[qIdx] = optionIdx;
+
+            if (optionsGroup) {
+                optionsGroup.querySelectorAll('.option-btn').forEach(btn => {
+                    btn.classList.remove('selected', 'correct', 'incorrect');
+                });
+            }
+
+            if (optionIdx === q.correctIndex) {
+                if (selectedBtn) selectedBtn.classList.add('selected', 'correct');
+                feedbackEl.className = 'feedback success';
+                feedbackEl.innerText = i18n[currentLang].correct_msg;
+                answeredStatus[qIdx] = true;
+            } else {
+                if (selectedBtn) selectedBtn.classList.add('selected', 'incorrect');
+                feedbackEl.className = 'feedback error';
+                feedbackEl.innerText = i18n[currentLang].incorrect_msg;
+                answeredStatus[qIdx] = false;
+            }
+            updateScorePill();
+        }
+
+        /* ==========================================================================
+           6. PIZARRA VECTORIAL POR PROBLEMA (DIBUJO, TEXTO T Y BORRADOR POR COLISIÓN)
+           ========================================================================== */
+        function initCanvas(idx) {
+            const canvas = document.getElementById(`sketchpad-${idx}`);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width || 600;
+            canvas.height = rect.height || 220;
+
+            canvasInstances[idx] = {
+                canvas,
+                ctx,
+                tool: 'pencil',
+                color: document.getElementById(`color-${idx}`).value,
+                size: parseInt(document.getElementById(`size-${idx}`).value, 10),
+                isDrawing: false,
+                startX: 0,
+                startY: 0,
+                strokes: [],
+                currentStroke: null
+            };
+
+            canvas.addEventListener('pointerdown', (e) => startDraw(e, idx));
+            canvas.addEventListener('pointermove', (e) => draw(e, idx));
+            canvas.addEventListener('pointerup', (e) => endDraw(e, idx));
+            canvas.addEventListener('pointerleave', (e) => endDraw(e, idx));
+        }
+
+        function syncCanvasResolution(idx) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            const rect = inst.canvas.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                inst.canvas.width = rect.width;
+                inst.canvas.height = rect.height;
+                redrawCanvas(idx);
+            }
+        }
+
+        function adjustCanvasHeight(idx, delta) {
+            const wrapper = document.getElementById(`canvas-wrapper-${idx}`);
+            if (!wrapper) return;
+            const currentH = wrapper.getBoundingClientRect().height;
+            const nextH = Math.max(150, Math.min(680, currentH + delta));
+            wrapper.style.height = `${nextH}px`;
+            syncCanvasResolution(idx);
+        }
+
+        function startCanvasResize(e, idx) {
+            e.preventDefault();
+            const wrapper = document.getElementById(`canvas-wrapper-${idx}`);
+            if (!wrapper) return;
+            const startY = e.clientY;
+            const startHeight = wrapper.getBoundingClientRect().height;
+
+            const onPointerMove = (moveEvent) => {
+                const newHeight = Math.max(150, Math.min(680, startHeight + (moveEvent.clientY - startY)));
+                wrapper.style.height = `${newHeight}px`;
+                syncCanvasResolution(idx);
+            };
+
+            const onPointerUp = () => {
+                window.removeEventListener('pointermove', onPointerMove);
+                window.removeEventListener('pointerup', onPointerUp);
+            };
+
+            window.addEventListener('pointermove', onPointerMove);
+            window.addEventListener('pointerup', onPointerUp);
+        }
+
+        window.addEventListener('resize', () => {
+            Object.keys(canvasInstances).forEach(idx => syncCanvasResolution(idx));
+        });
+
+        function setCanvasTool(idx, tool, btnEl) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            inst.tool = tool;
+            inst.canvas.style.cursor = tool === 'text' ? 'text' : 'crosshair';
+            const toolbar = document.getElementById(`canvas-wrapper-${idx}`).previousElementSibling;
+            toolbar.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+        }
+
+        function updateCanvasStyle(idx) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            inst.color = document.getElementById(`color-${idx}`).value;
+            inst.size = parseInt(document.getElementById(`size-${idx}`).value, 10);
+        }
+
+        function getPos(e, canvas) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            return {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
+            };
+        }
+
+        function spawnTextInput(idx, pos, clientX, clientY) {
+            const wrapper = document.getElementById(`canvas-wrapper-${idx}`);
+            const existing = wrapper.querySelector('.canvas-text-input');
+            if (existing) existing.remove();
+
+            const rect = wrapper.getBoundingClientRect();
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'canvas-text-input';
+            input.placeholder = currentLang === 'ES' ? 'Escribe aquí...' : 'Type here...';
+            input.style.left = `${Math.min(rect.width - 110, Math.max(4, clientX - rect.left))}px`;
+            input.style.top = `${Math.min(rect.height - 32, Math.max(4, clientY - rect.top - 12))}px`;
+            input.style.color = canvasInstances[idx].color;
+            input.style.fontSize = `${Math.max(14, canvasInstances[idx].size * 4)}px`;
+
+            wrapper.appendChild(input);
+            setTimeout(() => input.focus(), 10);
+
+            const commitText = () => {
+                const val = input.value.trim();
+                if (val) {
+                    const inst = canvasInstances[idx];
+                    const fontSize = Math.max(15, inst.size * 4.5);
+                    inst.ctx.font = `600 ${fontSize}px Poppins, sans-serif`;
+                    const textWidth = inst.ctx.measureText(val).width;
+                    inst.strokes.push({
+                        type: 'text',
+                        text: val,
+                        x: pos.x,
+                        y: pos.y + fontSize * 0.35,
+                        width: textWidth,
+                        height: fontSize,
+                        color: inst.color,
+                        fontSize
+                    });
+                    redrawCanvas(idx);
+                }
+                input.remove();
+            };
+
+            input.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Enter') {
+                    ev.preventDefault();
+                    commitText();
+                } else if (ev.key === 'Escape') {
+                    input.remove();
+                }
+            });
+            input.addEventListener('blur', commitText);
+        }
+
+        function startDraw(e, idx) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            const pos = getPos(e, inst.canvas);
+
+            if (inst.tool === 'text') {
+                spawnTextInput(idx, pos, e.clientX, e.clientY);
+                return;
+            }
+
+            inst.isDrawing = true;
+            inst.startX = pos.x;
+            inst.startY = pos.y;
+
+            if (inst.tool === 'pencil') {
+                inst.currentStroke = {
+                    type: 'pencil',
+                    color: inst.color,
+                    size: inst.size,
+                    points: [{ x: pos.x, y: pos.y }]
+                };
+            } else if (inst.tool === 'eraser') {
+                eraseStrokeAt(idx, pos.x, pos.y);
+            }
+        }
+
+        function draw(e, idx) {
+            const inst = canvasInstances[idx];
+            if (!inst || !inst.isDrawing) return;
+            const pos = getPos(e, inst.canvas);
+
+            if (inst.tool === 'pencil') {
+                inst.currentStroke.points.push({ x: pos.x, y: pos.y });
+                redrawCanvas(idx);
+            } else if (inst.tool === 'line' || inst.tool === 'rect') {
+                redrawCanvas(idx);
+                inst.ctx.beginPath();
+                inst.ctx.strokeStyle = inst.color;
+                inst.ctx.lineWidth = inst.size;
+                if (inst.tool === 'line') {
+                    inst.ctx.moveTo(inst.startX, inst.startY);
+                    inst.ctx.lineTo(pos.x, pos.y);
+                } else {
+                    inst.ctx.rect(inst.startX, inst.startY, pos.x - inst.startX, pos.y - inst.startY);
+                }
+                inst.ctx.stroke();
+            } else if (inst.tool === 'eraser') {
+                eraseStrokeAt(idx, pos.x, pos.y);
+            }
+        }
+
+        function endDraw(e, idx) {
+            const inst = canvasInstances[idx];
+            if (!inst || !inst.isDrawing) return;
+            inst.isDrawing = false;
+            const pos = getPos(e, inst.canvas);
+
+            if (inst.tool === 'pencil' && inst.currentStroke) {
+                inst.strokes.push(inst.currentStroke);
+                inst.currentStroke = null;
+            } else if (inst.tool === 'line') {
+                inst.strokes.push({
+                    type: 'line',
+                    color: inst.color,
+                    size: inst.size,
+                    x1: inst.startX,
+                    y1: inst.startY,
+                    x2: pos.x,
+                    y2: pos.y
+                });
+            } else if (inst.tool === 'rect') {
+                inst.strokes.push({
+                    type: 'rect',
+                    color: inst.color,
+                    size: inst.size,
+                    x1: inst.startX,
+                    y1: inst.startY,
+                    x2: pos.x,
+                    y2: pos.y
+                });
+            }
+            redrawCanvas(idx);
+        }
+
+        function redrawCanvas(idx) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            inst.ctx.clearRect(0, 0, inst.canvas.width, inst.canvas.height);
+
+            const renderStroke = (s) => {
+                if (s.type === 'text') {
+                    inst.ctx.font = `600 ${s.fontSize}px Poppins, sans-serif`;
+                    inst.ctx.fillStyle = s.color;
+                    inst.ctx.fillText(s.text, s.x, s.y);
+                    return;
+                }
+
+                inst.ctx.beginPath();
+                inst.ctx.strokeStyle = s.color;
+                inst.ctx.lineWidth = s.size;
+                inst.ctx.lineCap = 'round';
+                inst.ctx.lineJoin = 'round';
+
+                if (s.type === 'pencil') {
+                    if (s.points.length === 1) {
+                        inst.ctx.arc(s.points[0].x, s.points[0].y, s.size / 2, 0, Math.PI * 2);
+                        inst.ctx.fillStyle = s.color;
+                        inst.ctx.fill();
+                        return;
+                    }
+                    if (s.points.length < 2) return;
+                    inst.ctx.moveTo(s.points[0].x, s.points[0].y);
+                    for (let i = 1; i < s.points.length; i++) {
+                        inst.ctx.lineTo(s.points[i].x, s.points[i].y);
+                    }
+                } else if (s.type === 'line') {
+                    inst.ctx.moveTo(s.x1, s.y1);
+                    inst.ctx.lineTo(s.x2, s.y2);
+                } else if (s.type === 'rect') {
+                    inst.ctx.rect(s.x1, s.y1, s.x2 - s.x1, s.y2 - s.y1);
+                }
+                inst.ctx.stroke();
+            };
+
+            inst.strokes.forEach(renderStroke);
+            if (inst.currentStroke) renderStroke(inst.currentStroke);
+        }
+
+        function eraseStrokeAt(idx, px, py) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            const threshold = 14;
+            const p = { x: px, y: py };
+
+            inst.strokes = inst.strokes.filter(s => {
+                if (s.type === 'pencil') {
+                    if (s.points.length === 1) {
+                        return Math.hypot(s.points[0].x - px, s.points[0].y - py) > threshold;
+                    }
+                    for (let i = 0; i < s.points.length - 1; i++) {
+                        if (distToSegment(p, s.points[i], s.points[i + 1]) <= threshold) return false;
+                    }
+                    return true;
+                } else if (s.type === 'line') {
+                    return distToSegment(p, { x: s.x1, y: s.y1 }, { x: s.x2, y: s.y2 }) > threshold;
+                } else if (s.type === 'rect') {
+                    const p1 = { x: s.x1, y: s.y1 }, p2 = { x: s.x2, y: s.y1 };
+                    const p3 = { x: s.x2, y: s.y2 }, p4 = { x: s.x1, y: s.y2 };
+                    return Math.min(
+                        distToSegment(p, p1, p2), distToSegment(p, p2, p3),
+                        distToSegment(p, p3, p4), distToSegment(p, p4, p1)
+                    ) > threshold;
+                } else if (s.type === 'text') {
+                    return distToSegment(
+                        p,
+                        { x: s.x, y: s.y - s.height * 0.35 },
+                        { x: s.x + s.width, y: s.y - s.height * 0.35 }
+                    ) > (threshold + s.height * 0.4);
+                }
+                return true;
+            });
+            redrawCanvas(idx);
+        }
+
+        function distToSegment(p, v, w) {
+            const l2 = Math.pow(v.x - w.x, 2) + Math.pow(v.y - w.y, 2);
+            if (l2 === 0) return Math.hypot(p.x - v.x, p.y - v.y);
+            let t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+            t = Math.max(0, Math.min(1, t));
+            return Math.hypot(p.x - (v.x + t * (w.x - v.x)), p.y - (v.y + t * (w.y - v.y)));
+        }
+
+        function clearCanvas(idx) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            inst.strokes = [];
+            redrawCanvas(idx);
+        }
+
+        /* ==========================================================================
+           7. INICIALIZACIÓN DE LA APLICACIÓN
+           ========================================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            applyThemeUI();
+            document.getElementById('langToggleBtn').innerText = currentLang === 'ES' ? '🌐 ES' : '🌐 EN';
+
+            updateI18nText();
+            renderGoals();
+            renderTheory();
+            generateQuiz();
+            switchTab(currentTab, document.getElementById(`nav-${currentTab}`));
+        });
+    </script>
+</body>
+</html>
